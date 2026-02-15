@@ -1,6 +1,6 @@
 {
   "market": "dax40",
-  "scanned_at": "2026-02-15T16:06:43.924666",
+  "scanned_at": "2026-02-15T20:39:38.385142",
   "min_yield": 5.0,
   "total_candidates": 3,
   "candidates": [
@@ -19,10 +19,16 @@
       "market_cap_b": 50.98,
       "52w_high": 63.17,
       "52w_low": 45.6,
-      "discount_from_high": 8.79,
+      "dist_from_high": 8.8,
+      "max_drawdown_12m": 25.2,
+      "change_6m": 9.3,
+      "change_12m": 2.4,
+      "beta": 0.68,
       "ex_dividend_date": "2025-05-08",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:42.880253"
+      "scanned_at": "2026-02-15T20:39:37.112610"
     },
     {
       "ticker": "VOW3.DE",
@@ -39,10 +45,16 @@
       "market_cap_b": 52.49,
       "52w_high": 114.2,
       "52w_low": 81.68,
-      "discount_from_high": 9.72,
+      "dist_from_high": 9.7,
+      "max_drawdown_12m": 23.9,
+      "change_6m": 4.3,
+      "change_12m": 10.1,
+      "beta": 1.02,
       "ex_dividend_date": "2025-05-19",
+      "dividend_score": 5,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:43.638355"
+      "scanned_at": "2026-02-15T20:39:38.383960"
     },
     {
       "ticker": "PAH3.DE",
@@ -59,10 +71,16 @@
       "market_cap_b": 10.99,
       "52w_high": 41.52,
       "52w_low": 30.46,
-      "discount_from_high": 13.61,
+      "dist_from_high": 13.6,
+      "max_drawdown_12m": 20.5,
+      "change_6m": -1.9,
+      "change_12m": -0.0,
+      "beta": 0.99,
       "ex_dividend_date": "2025-06-11",
+      "dividend_score": 5,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:43.183715"
+      "scanned_at": "2026-02-15T20:39:37.550450"
     }
   ]
 }

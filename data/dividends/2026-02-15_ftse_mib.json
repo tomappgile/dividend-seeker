@@ -1,6 +1,6 @@
 {
   "market": "ftse_mib",
-  "scanned_at": "2026-02-15T16:06:50.282394",
+  "scanned_at": "2026-02-15T20:39:34.581949",
   "min_yield": 5.0,
   "total_candidates": 11,
   "candidates": [
@@ -19,10 +19,16 @@
       "market_cap_b": 22.65,
       "52w_high": 12.88,
       "52w_low": 5.31,
-      "discount_from_high": 10.36,
+      "dist_from_high": 10.4,
+      "max_drawdown_12m": 24.6,
+      "change_6m": 27.5,
+      "change_12m": 98.1,
+      "beta": 0.7,
       "ex_dividend_date": "2026-05-18",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:48.096697"
+      "scanned_at": "2026-02-15T20:39:31.887763"
     },
     {
       "ticker": "NEXI.MI",
@@ -39,10 +45,16 @@
       "market_cap_b": 3.74,
       "52w_high": 5.71,
       "52w_low": 3.17,
-      "discount_from_high": 43.99,
+      "dist_from_high": 44.0,
+      "max_drawdown_12m": 43.3,
+      "change_6m": -40.5,
+      "change_12m": -28.5,
+      "beta": 1.04,
       "ex_dividend_date": "2025-05-19",
+      "dividend_score": 1,
+      "capital_score": 1,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:49.270368"
+      "scanned_at": "2026-02-15T20:39:33.366707"
     },
     {
       "ticker": "MB.MI",
@@ -59,10 +71,16 @@
       "market_cap_b": 14.27,
       "52w_high": 22.34,
       "52w_low": 13.19,
-      "discount_from_high": 20.81,
+      "dist_from_high": 20.8,
+      "max_drawdown_12m": 27.5,
+      "change_6m": -13.6,
+      "change_12m": 12.0,
+      "beta": 0.59,
       "ex_dividend_date": "2026-04-20",
+      "dividend_score": 3,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:49.170300"
+      "scanned_at": "2026-02-15T20:39:33.353260"
     },
     {
       "ticker": "BMED.MI",
@@ -79,10 +97,16 @@
       "market_cap_b": 12.91,
       "52w_high": 20.68,
       "52w_low": 11.47,
-      "discount_from_high": 15.57,
+      "dist_from_high": 15.6,
+      "max_drawdown_12m": 21.1,
+      "change_6m": 8.0,
+      "change_12m": 37.8,
+      "beta": 0.8,
       "ex_dividend_date": "2025-11-24",
+      "dividend_score": 3,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:47.903781"
+      "scanned_at": "2026-02-15T20:39:31.750345"
     },
     {
       "ticker": "ISP.MI",
@@ -99,10 +123,16 @@
       "market_cap_b": 99.05,
       "52w_high": 6.16,
       "52w_low": 3.66,
-      "discount_from_high": 7.5,
+      "dist_from_high": 7.5,
+      "max_drawdown_12m": 21.2,
+      "change_6m": 8.5,
+      "change_12m": 39.4,
+      "beta": 0.81,
       "ex_dividend_date": "2026-05-18",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:48.890455"
+      "scanned_at": "2026-02-15T20:39:33.136010"
     },
     {
       "ticker": "ENI.MI",
@@ -119,10 +149,16 @@
       "market_cap_b": 53.59,
       "52w_high": 18.44,
       "52w_low": 11.01,
-      "discount_from_high": 1.39,
+      "dist_from_high": 1.4,
+      "max_drawdown_12m": 22.4,
+      "change_6m": 25.9,
+      "change_12m": 39.4,
+      "beta": 0.54,
       "ex_dividend_date": "2025-11-24",
+      "dividend_score": 1,
+      "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:48.459461"
+      "scanned_at": "2026-02-15T20:39:32.480429"
     },
     {
       "ticker": "BGN.MI",
@@ -139,10 +175,16 @@
       "market_cap_b": 6.11,
       "52w_high": 59.45,
       "52w_low": 41.7,
-      "discount_from_high": 9.84,
+      "dist_from_high": 9.8,
+      "max_drawdown_12m": 17.6,
+      "change_6m": 6.2,
+      "change_12m": 8.2,
+      "beta": 0.74,
       "ex_dividend_date": "2026-02-23",
+      "dividend_score": 3,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:47.780338"
+      "scanned_at": "2026-02-15T20:39:31.753688"
     },
     {
       "ticker": "ENEL.MI",
@@ -159,10 +201,16 @@
       "market_cap_b": 93.35,
       "52w_high": 9.76,
       "52w_low": 6.52,
-      "discount_from_high": 4.65,
+      "dist_from_high": 4.7,
+      "max_drawdown_12m": 12.8,
+      "change_6m": 20.1,
+      "change_12m": 42.6,
+      "beta": 0.9,
       "ex_dividend_date": "2026-01-19",
+      "dividend_score": 3,
+      "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:48.270202"
+      "scanned_at": "2026-02-15T20:39:32.349376"
     },
     {
       "ticker": "SPM.MI",
@@ -179,10 +227,16 @@
       "market_cap_b": 6.48,
       "52w_high": 3.37,
       "52w_low": 1.59,
-      "discount_from_high": 1.72,
+      "dist_from_high": 1.7,
+      "max_drawdown_12m": 30.7,
+      "change_6m": 44.4,
+      "change_12m": 55.1,
+      "beta": 1.77,
       "ex_dividend_date": "2025-05-19",
+      "dividend_score": 1,
+      "capital_score": 3,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:49.645741"
+      "scanned_at": "2026-02-15T20:39:34.038926"
     },
     {
       "ticker": "AZM.MI",
@@ -199,10 +253,16 @@
       "market_cap_b": 4.89,
       "52w_high": 37.32,
       "52w_low": 19.29,
-      "discount_from_high": 7.82,
+      "dist_from_high": 7.8,
+      "max_drawdown_12m": 24.1,
+      "change_6m": 13.6,
+      "change_12m": 37.9,
+      "beta": 1.01,
       "ex_dividend_date": "2025-05-19",
+      "dividend_score": 5,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:47.764920"
+      "scanned_at": "2026-02-15T20:39:31.731523"
     },
     {
       "ticker": "PST.MI",
@@ -219,10 +279,16 @@
       "market_cap_b": 29.22,
       "52w_high": 23.42,
       "52w_low": 14.48,
-      "discount_from_high": 3.59,
+      "dist_from_high": 3.6,
+      "max_drawdown_12m": 10.6,
+      "change_6m": 15.3,
+      "change_12m": 62.3,
+      "beta": 0.71,
       "ex_dividend_date": "2025-11-24",
+      "dividend_score": 4,
+      "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:49.574670"
+      "scanned_at": "2026-02-15T20:39:33.706997"
     }
   ]
 }

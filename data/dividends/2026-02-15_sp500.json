@@ -1,6 +1,6 @@
 {
   "market": "sp500",
-  "scanned_at": "2026-02-15T16:06:34.087372",
+  "scanned_at": "2026-02-15T20:39:10.058120",
   "min_yield": 5.0,
   "total_candidates": 12,
   "candidates": [
@@ -19,10 +19,16 @@
       "market_cap_b": 9.1,
       "52w_high": 105.14,
       "52w_low": 44.1,
-      "discount_from_high": 50.08,
+      "dist_from_high": 50.1,
+      "max_drawdown_12m": 54.0,
+      "change_6m": -28.9,
+      "change_12m": -41.1,
+      "beta": 1.32,
       "ex_dividend_date": "2025-12-31",
+      "dividend_score": 1,
+      "capital_score": 1,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:23.245163"
+      "scanned_at": "2026-02-15T20:38:58.828241"
     },
     {
       "ticker": "CAG",
@@ -39,10 +45,16 @@
       "market_cap_b": 9.45,
       "52w_high": 28.52,
       "52w_low": 15.96,
-      "discount_from_high": 30.72,
+      "dist_from_high": 30.7,
+      "max_drawdown_12m": 38.6,
+      "change_6m": 7.3,
+      "change_12m": -16.0,
+      "beta": -0.02,
       "ex_dividend_date": "2026-01-27",
+      "dividend_score": 3,
+      "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:24.057084"
+      "scanned_at": "2026-02-15T20:38:59.766511"
     },
     {
       "ticker": "KHC",
@@ -59,10 +71,16 @@
       "market_cap_b": 29.36,
       "52w_high": 33.35,
       "52w_low": 21.98,
-      "discount_from_high": 25.64,
+      "dist_from_high": 25.6,
+      "max_drawdown_12m": 27.3,
+      "change_6m": -7.6,
+      "change_12m": -9.1,
+      "beta": 0.05,
       "ex_dividend_date": "2026-03-06",
+      "dividend_score": 3,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:28.678454"
+      "scanned_at": "2026-02-15T20:39:04.422013"
     },
     {
       "ticker": "MO",
@@ -79,10 +97,16 @@
       "market_cap_b": 112.89,
       "52w_high": 68.6,
       "52w_low": 52.46,
-      "discount_from_high": 1.97,
+      "dist_from_high": 2.0,
+      "max_drawdown_12m": 16.4,
+      "change_6m": 5.7,
+      "change_12m": 35.2,
+      "beta": 0.5,
       "ex_dividend_date": "2025-12-26",
+      "dividend_score": 1,
+      "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:29.693990"
+      "scanned_at": "2026-02-15T20:39:05.841229"
     },
     {
       "ticker": "PFE",
@@ -99,10 +123,16 @@
       "market_cap_b": 156.81,
       "52w_high": 27.94,
       "52w_low": 20.92,
-      "discount_from_high": 1.29,
+      "dist_from_high": 1.3,
+      "max_drawdown_12m": 19.3,
+      "change_6m": 13.5,
+      "change_12m": 15.9,
+      "beta": 0.44,
       "ex_dividend_date": "2026-01-23",
+      "dividend_score": 1,
+      "capital_score": 4,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:30.835973"
+      "scanned_at": "2026-02-15T20:39:06.910837"
     },
     {
       "ticker": "HPQ",
@@ -119,10 +149,16 @@
       "market_cap_b": 18.0,
       "52w_high": 35.28,
       "52w_low": 18.26,
-      "discount_from_high": 45.41,
+      "dist_from_high": 45.4,
+      "max_drawdown_12m": 43.2,
+      "change_6m": -26.4,
+      "change_12m": -40.2,
+      "beta": 1.2,
       "ex_dividend_date": "2026-03-11",
+      "dividend_score": 5,
+      "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:27.810387"
+      "scanned_at": "2026-02-15T20:39:03.834604"
     },
     {
       "ticker": "VZ",
@@ -139,10 +175,16 @@
       "market_cap_b": 206.68,
       "52w_high": 50.24,
       "52w_low": 38.39,
-      "discount_from_high": 2.45,
+      "dist_from_high": 2.4,
+      "max_drawdown_12m": 13.3,
+      "change_6m": 14.6,
+      "change_12m": 27.8,
+      "beta": 0.32,
       "ex_dividend_date": "2026-04-10",
+      "dividend_score": 4,
+      "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:33.529260"
+      "scanned_at": "2026-02-15T20:39:09.633898"
     },
     {
       "ticker": "UPS",
@@ -159,10 +201,16 @@
       "market_cap_b": 101.16,
       "52w_high": 123.7,
       "52w_low": 82.0,
-      "discount_from_high": 3.61,
+      "dist_from_high": 3.6,
+      "max_drawdown_12m": 29.7,
+      "change_6m": 39.7,
+      "change_12m": 9.7,
+      "beta": 1.09,
       "ex_dividend_date": "2026-02-17",
+      "dividend_score": 2,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:33.181627"
+      "scanned_at": "2026-02-15T20:39:09.291878"
     },
     {
       "ticker": "DOW",
@@ -179,10 +227,16 @@
       "market_cap_b": 23.31,
       "52w_high": 40.09,
       "52w_low": 20.4,
-      "discount_from_high": 18.96,
+      "dist_from_high": 19.0,
+      "max_drawdown_12m": 45.1,
+      "change_6m": 43.2,
+      "change_12m": -9.7,
+      "beta": 0.75,
       "ex_dividend_date": "2026-02-27",
+      "dividend_score": 1,
+      "capital_score": 2,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:25.851968"
+      "scanned_at": "2026-02-15T20:39:01.513115"
     },
     {
       "ticker": "CPB",
@@ -199,10 +253,16 @@
       "market_cap_b": 8.79,
       "52w_high": 43.85,
       "52w_low": 25.62,
-      "discount_from_high": 32.75,
+      "dist_from_high": 32.7,
+      "max_drawdown_12m": 35.3,
+      "change_6m": -6.8,
+      "change_12m": -19.7,
+      "beta": -0.04,
       "ex_dividend_date": "2026-01-08",
+      "dividend_score": 3,
+      "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:25.141179"
+      "scanned_at": "2026-02-15T20:39:00.877592"
     },
     {
       "ticker": "PRU",
@@ -219,10 +279,16 @@
       "market_cap_b": 36.4,
       "52w_high": 119.76,
       "52w_low": 90.38,
-      "discount_from_high": 12.65,
+      "dist_from_high": 12.7,
+      "max_drawdown_12m": 17.7,
+      "change_6m": 1.4,
+      "change_12m": -1.4,
+      "beta": 0.95,
       "ex_dividend_date": "2026-02-17",
+      "dividend_score": 4,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:31.430085"
+      "scanned_at": "2026-02-15T20:39:07.440582"
     },
     {
       "ticker": "GIS",
@@ -239,10 +305,16 @@
       "market_cap_b": 25.79,
       "52w_high": 67.35,
       "52w_low": 42.79,
-      "discount_from_high": 28.23,
+      "dist_from_high": 28.2,
+      "max_drawdown_12m": 31.9,
+      "change_6m": -0.0,
+      "change_12m": -13.7,
+      "beta": -0.06,
       "ex_dividend_date": "2026-04-10",
+      "dividend_score": 4,
+      "capital_score": 2,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:27.451542"
+      "scanned_at": "2026-02-15T20:39:03.354878"
     }
   ]
 }
