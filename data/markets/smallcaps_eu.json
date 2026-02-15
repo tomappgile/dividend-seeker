@@ -1,0 +1,16 @@
+{
+  "name": "EU Small Caps Dividend",
+  "tickers": [
+    "ENC.MC",
+    "AENA.MC",
+    "GRF.MC",
+    "CIEM.MC",
+    "ALM.MC",
+    "JUVE.MI",
+    "DAN.MI",
+    "IGD.MI",
+    "CNP.PA",
+    "CGG.PA",
+    "FNAC.PA"
+  ]
+}
