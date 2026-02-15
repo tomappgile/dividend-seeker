@@ -1,0 +1,15 @@
+{
+  "name": "Global Banks Extra",
+  "tickers": [
+    "D05.SI",
+    "O39.SI",
+    "U11.SI",
+    "IBN",
+    "HDB",
+    "MUFG",
+    "SMFG",
+    "MFG",
+    "SBK.JO",
+    "NED.JO"
+  ]
+}

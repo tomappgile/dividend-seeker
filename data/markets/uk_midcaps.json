@@ -1,0 +1,15 @@
+{
+  "name": "UK Midcaps Dividend",
+  "tickers": [
+    "BDEV.L",
+    "TW.L",
+    "PSN.L",
+    "AUTO.L",
+    "PSON.L",
+    "IGG.L",
+    "SPX.L",
+    "SRP.L",
+    "TRY.L",
+    "WTB.L"
+  ]
+}
