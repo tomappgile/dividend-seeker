@@ -1,0 +1,19 @@
+{
+  "name": "UK Financials Deep",
+  "tickers": [
+    "HSBA.L",
+    "BARC.L",
+    "LLOY.L",
+    "NWG.L",
+    "STAN.L",
+    "LGEN.L",
+    "PHNX.L",
+    "AVIVA.L",
+    "PRU.L",
+    "ADM.L",
+    "III.L",
+    "SBRE.L",
+    "JUP.L",
+    "ASHM.L"
+  ]
+}

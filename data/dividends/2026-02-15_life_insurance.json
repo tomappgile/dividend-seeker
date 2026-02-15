@@ -1,0 +1,34 @@
+{
+  "market": "life_insurance",
+  "scanned_at": "2026-02-15T22:13:20.781031",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "PRU",
+      "name": "Prudential Financial, Inc.",
+      "sector": "Financial Services",
+      "industry": "Insurance - Life",
+      "currency": "USD",
+      "price": 104.61,
+      "dividend_yield": 5.21,
+      "dividend_rate": 5.45,
+      "payout_ratio": 54.05,
+      "pe_ratio": 10.47,
+      "market_cap": 36404281344,
+      "market_cap_b": 36.4,
+      "52w_high": 119.76,
+      "52w_low": 90.38,
+      "dist_from_high": 12.7,
+      "max_drawdown_12m": 17.7,
+      "change_6m": 1.4,
+      "change_12m": -1.4,
+      "beta": 0.95,
+      "ex_dividend_date": "2026-02-17",
+      "dividend_score": 4,
+      "capital_score": 3,
+      "sustainable": true,
+      "scanned_at": "2026-02-15T22:13:19.969337"
+    }
+  ]
+}

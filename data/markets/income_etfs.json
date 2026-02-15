@@ -1,0 +1,15 @@
+{
+  "name": "Income ETFs",
+  "tickers": [
+    "JEPI",
+    "JEPQ",
+    "XYLD",
+    "QYLD",
+    "RYLD",
+    "DIVO",
+    "NUSI",
+    "FTHI",
+    "SPYI",
+    "SVOL"
+  ]
+}
