@@ -44,6 +44,11 @@ def index():
     return send_from_directory('static', 'index.html')
 
 
+@app.route('/stock.html')
+def stock_page():
+    return send_from_directory('static', 'stock.html')
+
+
 @app.route('/api/stats')
 def api_stats():
     """Dashboard stats"""
@@ -113,6 +118,152 @@ def api_stock_detail(ticker):
             })
     
     return jsonify({'error': 'Stock not found'}), 404
+
+
+def get_cached_analysis(ticker):
+    """Get cached analysis for a stock"""
+    cache_file = DATA_PATH / 'analysis' / f'{ticker.replace(".", "_")}.json'
+    if cache_file.exists():
+        with open(cache_file) as f:
+            return json.load(f)
+    return None
+
+
+def save_analysis(ticker, analysis):
+    """Save analysis to cache"""
+    cache_dir = DATA_PATH / 'analysis'
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    cache_file = cache_dir / f'{ticker.replace(".", "_")}.json'
+    with open(cache_file, 'w') as f:
+        json.dump(analysis, f, indent=2)
+
+
+def generate_analysis(ticker):
+    """Generate fresh analysis for a stock using yfinance"""
+    try:
+        import yfinance as yf
+        
+        stock = yf.Ticker(ticker)
+        info = stock.info
+        hist = stock.history(period='1y')
+        divs = stock.dividends
+        
+        # Basic data
+        analysis = {
+            'ticker': ticker,
+            'analyzed_at': datetime.now().isoformat(),
+            'name': info.get('longName') or info.get('shortName'),
+            'sector': info.get('sector'),
+            'industry': info.get('industry'),
+            'currency': info.get('currency'),
+            'price': info.get('currentPrice') or info.get('regularMarketPrice'),
+            'dividend_yield': info.get('dividendYield', 0),
+            'dividend_rate': info.get('dividendRate'),
+            'payout_ratio': (info.get('payoutRatio') or 0) * 100,
+            'pe_ratio': info.get('trailingPE'),
+            'pb_ratio': info.get('priceToBook'),
+            'market_cap': info.get('marketCap'),
+            'market_cap_b': round(info.get('marketCap', 0) / 1e9, 2) if info.get('marketCap') else None,
+            'week_52_high': info.get('fiftyTwoWeekHigh'),
+            'week_52_low': info.get('fiftyTwoWeekLow'),
+        }
+        
+        # Performance
+        if len(hist) > 0:
+            current = hist['Close'].iloc[-1]
+            if len(hist) >= 21:
+                analysis['change_1m'] = round(((current - hist['Close'].iloc[-21]) / hist['Close'].iloc[-21]) * 100, 1)
+            if len(hist) >= 63:
+                analysis['change_3m'] = round(((current - hist['Close'].iloc[-63]) / hist['Close'].iloc[-63]) * 100, 1)
+            if len(hist) >= 126:
+                analysis['change_6m'] = round(((current - hist['Close'].iloc[-126]) / hist['Close'].iloc[-126]) * 100, 1)
+            if len(hist) >= 252:
+                analysis['change_1y'] = round(((current - hist['Close'].iloc[-252]) / hist['Close'].iloc[-252]) * 100, 1)
+        
+        # Dividend history
+        analysis['dividend_history'] = []
+        if len(divs) > 0:
+            for date, amount in list(divs.tail(10).items()):
+                analysis['dividend_history'].append({
+                    'date': date.strftime('%Y-%m-%d'),
+                    'amount': round(float(amount), 4)
+                })
+        
+        # Generate summary
+        div_yield = analysis.get('dividend_yield', 0)
+        if div_yield and div_yield < 1:
+            div_yield = div_yield * 100
+        
+        payout = analysis.get('payout_ratio', 0)
+        pe = analysis.get('pe_ratio')
+        change_6m = analysis.get('change_6m', 0)
+        
+        summary_parts = []
+        summary_parts.append(f"📊 {analysis['name']} ({ticker})")
+        summary_parts.append(f"\n\n💰 DIVIDENDO")
+        summary_parts.append(f"• Yield: {div_yield:.1f}%")
+        summary_parts.append(f"• Payout ratio: {payout:.0f}%" + (" ✅ Sostenible" if payout <= 100 else " ⚠️ Alto"))
+        
+        if analysis['dividend_history']:
+            summary_parts.append(f"\n\n📈 EVOLUCIÓN DIVIDENDO")
+            for d in analysis['dividend_history'][-4:]:
+                summary_parts.append(f"• {d['date']}: {analysis.get('currency', '€')} {d['amount']:.4f}")
+        
+        summary_parts.append(f"\n\n📊 VALORACIÓN")
+        if pe:
+            summary_parts.append(f"• P/E: {pe:.1f}x" + (" (Barato)" if pe < 12 else " (Caro)" if pe > 20 else ""))
+        
+        summary_parts.append(f"\n\n🚀 MOMENTUM")
+        summary_parts.append(f"• 6 meses: {'+' if change_6m > 0 else ''}{change_6m:.1f}%")
+        
+        analysis['summary'] = '\n'.join(summary_parts)
+        
+        # Cache the analysis
+        save_analysis(ticker, analysis)
+        
+        return analysis
+        
+    except Exception as e:
+        return {'error': str(e), 'ticker': ticker}
+
+
+@app.route('/api/stock/<ticker>/full')
+def api_stock_full(ticker):
+    """Get full stock analysis (cached or fresh)"""
+    # First get basic stock data from our list
+    stocks = get_all_stocks()
+    stock_data = None
+    for s in stocks:
+        if s['ticker'] == ticker:
+            stock_data = s
+            break
+    
+    if not stock_data:
+        return jsonify({'error': 'Stock not found'}), 404
+    
+    # Check cache
+    cached = get_cached_analysis(ticker)
+    if cached:
+        # Check if cache is fresh (less than 24 hours old)
+        try:
+            cached_time = datetime.fromisoformat(cached.get('analyzed_at', '2000-01-01'))
+            if (datetime.now() - cached_time).total_seconds() < 86400:  # 24 hours
+                return jsonify({
+                    'stock': stock_data,
+                    'analysis': cached,
+                    'cached': True
+                })
+        except:
+            pass
+    
+    # Generate fresh analysis
+    analysis = generate_analysis(ticker)
+    
+    return jsonify({
+        'stock': stock_data,
+        'analysis': analysis,
+        'cached': False
+    })
 
 
 @app.route('/api/markets')

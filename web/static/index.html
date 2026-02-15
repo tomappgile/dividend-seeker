@@ -288,7 +288,7 @@
                     '<span class="badge risky">⚠ Riesgo</span>';
                 
                 return `
-                    <tr>
+                    <tr onclick="window.location.href='/stock.html?t=${s.ticker}'" style="cursor: pointer;">
                         <td class="ticker">${s.ticker}</td>
                         <td>${s.name || '-'}</td>
                         <td>${s.market || '-'}</td>

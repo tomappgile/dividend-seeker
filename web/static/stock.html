@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Detail - Dividend Seeker</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e2e8f0;
+            --muted: #94a3b8;
+            --accent: #22c55e;
+            --accent2: #3b82f6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        .back-link {
+            color: var(--accent2);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .ticker-name h1 {
+            font-size: 32px;
+            color: var(--accent2);
+        }
+        
+        .ticker-name .name {
+            color: var(--muted);
+            font-size: 18px;
+        }
+        
+        .price-box {
+            text-align: right;
+        }
+        
+        .price {
+            font-size: 36px;
+            font-weight: bold;
+        }
+        
+        .yield {
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .card-label {
+            color: var(--muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        
+        .card-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .card-value.green { color: var(--accent); }
+        .card-value.red { color: var(--danger); }
+        .card-value.yellow { color: var(--warning); }
+        
+        .section {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .section h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .dividend-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .dividend-table th,
+        .dividend-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #334155;
+        }
+        
+        .dividend-table th {
+            color: var(--muted);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .perf-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--bg);
+            border-radius: 8px;
+        }
+        
+        .perf-label {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .perf-value {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .analysis {
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .badge.sustainable { background: #166534; color: #4ade80; }
+        .badge.risky { background: #7f1d1d; color: #fca5a5; }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--muted);
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--card);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 600px) {
+            .performance-grid { grid-template-columns: repeat(2, 1fr); }
+            .header { flex-direction: column; }
+            .price-box { text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-link">← Volver al Dashboard</a>
+        
+        <div id="content">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Cargando datos...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API = '';
+        const ticker = new URLSearchParams(window.location.search).get('t');
+        
+        if (!ticker) {
+            window.location.href = '/';
+        }
+        
+        async function loadStock() {
+            try {
+                const res = await fetch(`${API}/api/stock/${ticker}/full`);
+                const data = await res.json();
+                
+                if (data.error) {
+                    document.getElementById('content').innerHTML = `
+                        <div class="section">
+                            <h2>❌ Error</h2>
+                            <p>${data.error}</p>
+                            <p><a href="/" class="back-link">Volver al Dashboard</a></p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                renderStock(data);
+            } catch (e) {
+                document.getElementById('content').innerHTML = `
+                    <div class="section">
+                        <h2>❌ Error de conexión</h2>
+                        <p>${e.message}</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function renderStock(data) {
+            const s = data.stock;
+            const analysis = data.analysis;
+            
+            const yieldClass = s.dividend_yield >= 10 ? 'yellow' : s.dividend_yield >= 7 ? 'green' : '';
+            const sustainBadge = s.sustainable !== false ? 
+                '<span class="badge sustainable">✓ Sostenible</span>' : 
+                '<span class="badge risky">⚠ Payout Alto</span>';
+            
+            const perfColor = (val) => val > 0 ? 'green' : val < 0 ? 'red' : '';
+            const perfSign = (val) => val > 0 ? '+' : '';
+            
+            document.getElementById('content').innerHTML = `
+                <div class="header">
+                    <div class="ticker-name">
+                        <h1>${s.ticker}</h1>
+                        <div class="name">${s.name || ''}</div>
+                        <div style="margin-top: 10px;">
+                            ${sustainBadge}
+                            <span class="badge" style="background: #1e40af; color: #93c5fd;">${s.sector || 'N/A'}</span>
+                            <span class="badge" style="background: #334155;">${s.ocean_market || s.market || 'N/A'}</span>
+                        </div>
+                    </div>
+                    <div class="price-box">
+                        <div class="price">${s.currency || '€'} ${s.price?.toFixed(2) || 'N/A'}</div>
+                        <div class="yield">${s.dividend_yield?.toFixed(2) || 0}% yield</div>
+                    </div>
+                </div>
+                
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-label">Dividendo Anual</div>
+                        <div class="card-value">${s.currency || '€'} ${s.dividend_rate || s.div_rate || 'N/A'}</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Payout Ratio</div>
+                        <div class="card-value ${s.payout_ratio > 100 ? 'red' : 'green'}">${s.payout_ratio?.toFixed(0) || 'N/A'}%</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">P/E Ratio</div>
+                        <div class="card-value">${s.pe_ratio?.toFixed(1) || 'N/A'}</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Market Cap</div>
+                        <div class="card-value">${s.market_cap_b || 'N/A'}B</div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h2>📊 Rendimiento</h2>
+                    <div class="performance-grid">
+                        <div class="perf-item">
+                            <div class="perf-label">1 Mes</div>
+                            <div class="perf-value ${perfColor(analysis?.change_1m)}">${perfSign(analysis?.change_1m)}${analysis?.change_1m?.toFixed(1) || 'N/A'}%</div>
+                        </div>
+                        <div class="perf-item">
+                            <div class="perf-label">3 Meses</div>
+                            <div class="perf-value ${perfColor(analysis?.change_3m)}">${perfSign(analysis?.change_3m)}${analysis?.change_3m?.toFixed(1) || 'N/A'}%</div>
+                        </div>
+                        <div class="perf-item">
+                            <div class="perf-label">6 Meses</div>
+                            <div class="perf-value ${perfColor(s.change_6m || analysis?.change_6m)}">${perfSign(s.change_6m || analysis?.change_6m)}${(s.change_6m || analysis?.change_6m)?.toFixed(1) || 'N/A'}%</div>
+                        </div>
+                        <div class="perf-item">
+                            <div class="perf-label">1 Año</div>
+                            <div class="perf-value ${perfColor(analysis?.change_1y)}">${perfSign(analysis?.change_1y)}${analysis?.change_1y?.toFixed(1) || 'N/A'}%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                ${analysis?.dividend_history?.length ? `
+                <div class="section">
+                    <h2>💰 Historial de Dividendos</h2>
+                    <table class="dividend-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${analysis.dividend_history.slice(0, 10).map(d => `
+                                <tr>
+                                    <td>${d.date}</td>
+                                    <td>${s.currency || '€'} ${d.amount?.toFixed(4)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+                ` : ''}
+                
+                ${analysis?.summary ? `
+                <div class="section">
+                    <h2>📝 Análisis</h2>
+                    <div class="analysis">${analysis.summary}</div>
+                </div>
+                ` : ''}
+                
+                <div class="section" style="background: transparent; padding: 10px 0;">
+                    <p style="color: var(--muted); font-size: 12px;">
+                        Último análisis: ${analysis?.analyzed_at || 'N/A'}<br>
+                        ⚠️ Esto es información, no consejo financiero.
+                    </p>
+                </div>
+            `;
+        }
+        
+        loadStock();
+    </script>
+</body>
+</html>
