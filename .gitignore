@@ -12,3 +12,4 @@ data/logs/
 .vscode/
 .idea/
 *.swp
+*.db
