@@ -1,8 +1,8 @@
 {
   "broker": "CaixaBank Ocean",
-  "updated_at": "2026-02-15T21:44:56.030035",
+  "updated_at": "2026-02-15T21:45:48.309835",
   "scan_date": "2026-02-15",
-  "total": 138,
+  "total": 139,
   "stocks": [
     {
       "ticker": "FSK",
@@ -478,7 +478,7 @@
       "dividend_score": 1,
       "capital_score": 2,
       "sustainable": false,
-      "scanned_at": "2026-02-15T20:38:41.989007"
+      "scanned_at": "2026-02-15T21:45:31.732560"
     },
     {
       "ticker": "HESM",
@@ -758,7 +758,7 @@
       "dividend_score": 3,
       "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T20:38:59.766511"
+      "scanned_at": "2026-02-15T21:45:35.374672"
     },
     {
       "ticker": "BMED.MI",
@@ -938,7 +938,7 @@
       "dividend_score": 3,
       "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T20:39:04.422013"
+      "scanned_at": "2026-02-15T21:45:35.280325"
     },
     {
       "ticker": "SPH",
@@ -1028,7 +1028,7 @@
       "dividend_score": 1,
       "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-15T20:39:05.841229"
+      "scanned_at": "2026-02-15T21:45:35.055288"
     },
     {
       "ticker": "ADM.L",
@@ -1436,7 +1436,7 @@
       "dividend_score": 1,
       "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-15T20:38:41.486754"
+      "scanned_at": "2026-02-15T21:45:33.863179"
     },
     {
       "ticker": "GTY",
@@ -1787,16 +1787,56 @@
       "sustainable": true
     },
     {
+      "ticker": "ELISA.HE",
+      "name": "Elisa Corporation",
+      "sector": "Communication Services",
+      "industry": "Telecom Services",
+      "currency": "EUR",
+      "price": 42.74,
+      "dividend_yield": 5.62,
+      "dividend_rate": 2.4,
+      "payout_ratio": 110.33,
+      "pe_ratio": 20.07,
+      "market_cap": 6862777344,
+      "market_cap_b": 6.86,
+      "52w_high": 55.0,
+      "52w_low": 34.48,
+      "dist_from_high": 22.3,
+      "max_drawdown_12m": 31.6,
+      "change_6m": -0.8,
+      "change_12m": 6.6,
+      "beta": 0.39,
+      "ex_dividend_date": "2026-04-02",
+      "dividend_score": 1,
+      "capital_score": 3,
+      "sustainable": false,
+      "scanned_at": "2026-02-15T21:45:32.345016"
+    },
+    {
       "ticker": "EQNR.OL",
       "name": "EQUINOR",
-      "market": "Nordic",
-      "price": 267.7,
-      "currency": "NOK",
-      "dividend_yield": 5.6,
-      "payout_ratio": 75.5,
-      "change_6m": 10.2,
       "sector": "Energy",
-      "sustainable": true
+      "industry": "Oil & Gas Integrated",
+      "currency": "NOK",
+      "price": 267.7,
+      "dividend_yield": 5.6,
+      "dividend_rate": 14.99,
+      "payout_ratio": 75.53,
+      "pe_ratio": 14.53,
+      "market_cap": 668331278336,
+      "market_cap_b": 668.33,
+      "52w_high": 287.3,
+      "52w_low": 226.4,
+      "dist_from_high": 6.8,
+      "max_drawdown_12m": 18.1,
+      "change_6m": 10.5,
+      "change_12m": 9.1,
+      "beta": -0.27,
+      "ex_dividend_date": "2026-02-16",
+      "dividend_score": 3,
+      "capital_score": 4,
+      "sustainable": true,
+      "scanned_at": "2026-02-15T21:45:34.254161"
     },
     {
       "ticker": "NWG.L",
@@ -2204,7 +2244,7 @@
       "dividend_score": 3,
       "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T20:39:00.877592"
+      "scanned_at": "2026-02-15T21:45:35.732746"
     },
     {
       "ticker": "TTE.PA",
@@ -2549,7 +2589,7 @@
       "dividend_score": 4,
       "capital_score": 2,
       "sustainable": true,
-      "scanned_at": "2026-02-15T20:39:03.354878"
+      "scanned_at": "2026-02-15T21:45:35.359721"
     },
     {
       "ticker": "2222.SR",

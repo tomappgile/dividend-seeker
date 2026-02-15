@@ -1,0 +1,20 @@
+{
+  "name": "Energy & Oil",
+  "tickers": [
+    "XOM",
+    "CVX",
+    "COP",
+    "EOG",
+    "PXD",
+    "DVN",
+    "MPC",
+    "VLO",
+    "PSX",
+    "SHEL.L",
+    "BP.L",
+    "TTE.PA",
+    "ENI.MI",
+    "REP.MC",
+    "EQNR.OL"
+  ]
+}
