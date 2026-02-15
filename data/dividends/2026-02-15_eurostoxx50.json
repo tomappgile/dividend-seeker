@@ -1,6 +1,6 @@
 {
   "market": "eurostoxx50",
-  "scanned_at": "2026-02-15T16:06:40.898089",
+  "scanned_at": "2026-02-15T21:35:12.803469",
   "min_yield": 5.0,
   "total_candidates": 11,
   "candidates": [
@@ -19,10 +19,16 @@
       "market_cap_b": 99.84,
       "52w_high": 95.5,
       "52w_low": 61.0,
-      "discount_from_high": 6.39,
+      "dist_from_high": 6.4,
+      "max_drawdown_12m": 21.8,
+      "change_6m": 10.5,
+      "change_12m": 40.4,
+      "beta": 0.99,
       "ex_dividend_date": "2025-09-26",
+      "dividend_score": 3,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:37.958111"
+      "scanned_at": "2026-02-15T21:35:09.906176"
     },
     {
       "ticker": "TEF.MC",
@@ -39,10 +45,16 @@
       "market_cap_b": 20.72,
       "52w_high": 4.89,
       "52w_low": 3.24,
-      "discount_from_high": 24.97,
+      "dist_from_high": 25.0,
+      "max_drawdown_12m": 30.9,
+      "change_6m": -20.4,
+      "change_12m": -5.9,
+      "beta": 0.28,
       "ex_dividend_date": "2025-12-16",
+      "dividend_score": 1,
+      "capital_score": 2,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:40.539230"
+      "scanned_at": "2026-02-15T21:35:12.528893"
     },
     {
       "ticker": "MBG.DE",
@@ -59,10 +71,16 @@
       "market_cap_b": 50.98,
       "52w_high": 63.17,
       "52w_low": 45.6,
-      "discount_from_high": 8.79,
+      "dist_from_high": 8.8,
+      "max_drawdown_12m": 25.2,
+      "change_6m": 9.3,
+      "change_12m": 2.4,
+      "beta": 0.68,
       "ex_dividend_date": "2025-05-08",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:39.395871"
+      "scanned_at": "2026-02-15T21:35:11.344115"
     },
     {
       "ticker": "ISP.MI",
@@ -79,10 +97,16 @@
       "market_cap_b": 99.05,
       "52w_high": 6.16,
       "52w_low": 3.66,
-      "discount_from_high": 7.5,
+      "dist_from_high": 7.5,
+      "max_drawdown_12m": 21.2,
+      "change_6m": 8.5,
+      "change_12m": 39.4,
+      "beta": 0.81,
       "ex_dividend_date": "2026-05-18",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:39.050123"
+      "scanned_at": "2026-02-15T21:35:11.114729"
     },
     {
       "ticker": "VOW3.DE",
@@ -99,10 +123,16 @@
       "market_cap_b": 52.49,
       "52w_high": 114.2,
       "52w_low": 81.68,
-      "discount_from_high": 9.72,
+      "dist_from_high": 9.7,
+      "max_drawdown_12m": 23.9,
+      "change_6m": 4.3,
+      "change_12m": 10.1,
+      "beta": 1.02,
       "ex_dividend_date": "2025-05-19",
+      "dividend_score": 5,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:40.896611"
+      "scanned_at": "2026-02-15T21:35:12.802496"
     },
     {
       "ticker": "CS.PA",
@@ -119,10 +149,16 @@
       "market_cap_b": 78.31,
       "52w_high": 43.61,
       "52w_low": 34.0,
-      "discount_from_high": 14.1,
+      "dist_from_high": 14.1,
+      "max_drawdown_12m": 13.7,
+      "change_6m": -13.7,
+      "change_12m": 3.9,
+      "beta": 0.6,
       "ex_dividend_date": "2025-05-05",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:38.650758"
+      "scanned_at": "2026-02-15T21:35:10.079719"
     },
     {
       "ticker": "ENI.MI",
@@ -139,10 +175,16 @@
       "market_cap_b": 53.59,
       "52w_high": 18.44,
       "52w_low": 11.01,
-      "discount_from_high": 1.39,
+      "dist_from_high": 1.4,
+      "max_drawdown_12m": 22.4,
+      "change_6m": 25.9,
+      "change_12m": 39.4,
+      "beta": 0.54,
       "ex_dividend_date": "2025-11-24",
+      "dividend_score": 1,
+      "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-15T16:06:38.681348"
+      "scanned_at": "2026-02-15T21:35:10.668398"
     },
     {
       "ticker": "ENGI.PA",
@@ -159,10 +201,16 @@
       "market_cap_b": 63.39,
       "52w_high": 26.78,
       "52w_low": 15.44,
-      "discount_from_high": 2.58,
+      "dist_from_high": 2.6,
+      "max_drawdown_12m": 13.3,
+      "change_6m": 38.0,
+      "change_12m": 81.6,
+      "beta": 0.58,
       "ex_dividend_date": "2025-04-25",
+      "dividend_score": 3,
+      "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:38.671533"
+      "scanned_at": "2026-02-15T21:35:10.427240"
     },
     {
       "ticker": "TTE.PA",
@@ -179,10 +227,16 @@
       "market_cap_b": 137.91,
       "52w_high": 65.79,
       "52w_low": 47.65,
-      "discount_from_high": 2.14,
+      "dist_from_high": 2.1,
+      "max_drawdown_12m": 20.3,
+      "change_6m": 24.3,
+      "change_12m": 16.6,
+      "beta": 0.25,
       "ex_dividend_date": "2026-03-31",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:40.545773"
+      "scanned_at": "2026-02-15T21:35:12.356445"
     },
     {
       "ticker": "ENEL.MI",
@@ -199,10 +253,16 @@
       "market_cap_b": 93.35,
       "52w_high": 9.76,
       "52w_low": 6.52,
-      "discount_from_high": 4.65,
+      "dist_from_high": 4.7,
+      "max_drawdown_12m": 12.8,
+      "change_6m": 20.1,
+      "change_12m": 42.6,
+      "beta": 0.9,
       "ex_dividend_date": "2026-01-19",
+      "dividend_score": 3,
+      "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:38.676090"
+      "scanned_at": "2026-02-15T21:35:10.584044"
     },
     {
       "ticker": "SAN.PA",
@@ -219,10 +279,16 @@
       "market_cap_b": 94.03,
       "52w_high": 110.88,
       "52w_low": 76.15,
-      "discount_from_high": 30.0,
+      "dist_from_high": 30.0,
+      "max_drawdown_12m": 26.6,
+      "change_6m": -8.6,
+      "change_12m": -23.1,
+      "beta": 0.37,
       "ex_dividend_date": "2025-05-12",
+      "dividend_score": 2,
+      "capital_score": 2,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:40.154920"
+      "scanned_at": "2026-02-15T21:35:11.977063"
     }
   ]
 }

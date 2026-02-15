@@ -1,0 +1,21 @@
+{
+  "name": "AEX Amsterdam",
+  "country": "Netherlands",
+  "tickers": [
+    "ASRNL.AS",
+    "NN.AS",
+    "ABN.AS",
+    "ING.AS",
+    "RAND.AS",
+    "SHELL.AS",
+    "UNA.AS",
+    "PHIA.AS",
+    "DSM.AS",
+    "AKZA.AS",
+    "KPN.AS",
+    "BESI.AS",
+    "ASML.AS",
+    "WKL.AS",
+    "AD.AS"
+  ]
+}

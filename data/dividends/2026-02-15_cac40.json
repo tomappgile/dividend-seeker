@@ -1,6 +1,6 @@
 {
   "market": "cac40",
-  "scanned_at": "2026-02-15T16:06:47.167900",
+  "scanned_at": "2026-02-15T21:35:08.877298",
   "min_yield": 5.0,
   "total_candidates": 8,
   "candidates": [
@@ -19,10 +19,16 @@
       "market_cap_b": 99.84,
       "52w_high": 95.5,
       "52w_low": 61.0,
-      "discount_from_high": 6.39,
+      "dist_from_high": 6.4,
+      "max_drawdown_12m": 21.8,
+      "change_6m": 10.5,
+      "change_12m": 40.4,
+      "beta": 0.99,
       "ex_dividend_date": "2025-09-26",
+      "dividend_score": 3,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:44.837611"
+      "scanned_at": "2026-02-15T21:35:06.354308"
     },
     {
       "ticker": "TEP.PA",
@@ -39,10 +45,16 @@
       "market_cap_b": 3.02,
       "52w_high": 107.8,
       "52w_low": 49.84,
-      "discount_from_high": 51.8,
+      "dist_from_high": 51.8,
+      "max_drawdown_12m": 50.9,
+      "change_6m": -28.3,
+      "change_12m": -45.5,
+      "beta": 0.59,
       "ex_dividend_date": "2025-05-26",
+      "dividend_score": 5,
+      "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:46.726502"
+      "scanned_at": "2026-02-15T21:35:08.621923"
     },
     {
       "ticker": "RNO.PA",
@@ -59,10 +71,16 @@
       "market_cap_b": 9.51,
       "52w_high": 53.26,
       "52w_low": 30.15,
-      "discount_from_high": 38.42,
+      "dist_from_high": 38.4,
+      "max_drawdown_12m": 39.0,
+      "change_6m": -0.9,
+      "change_12m": -33.7,
+      "beta": 0.79,
       "ex_dividend_date": "2025-05-08",
+      "dividend_score": 4,
+      "capital_score": 1,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:46.484735"
+      "scanned_at": "2026-02-15T21:35:07.796282"
     },
     {
       "ticker": "CS.PA",
@@ -79,10 +97,16 @@
       "market_cap_b": 78.31,
       "52w_high": 43.61,
       "52w_low": 34.0,
-      "discount_from_high": 14.1,
+      "dist_from_high": 14.1,
+      "max_drawdown_12m": 13.7,
+      "change_6m": -13.7,
+      "change_12m": 3.9,
+      "beta": 0.6,
       "ex_dividend_date": "2025-05-05",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:44.909546"
+      "scanned_at": "2026-02-15T21:35:06.417899"
     },
     {
       "ticker": "ENGI.PA",
@@ -99,10 +123,16 @@
       "market_cap_b": 63.39,
       "52w_high": 26.78,
       "52w_low": 15.44,
-      "discount_from_high": 2.58,
+      "dist_from_high": 2.6,
+      "max_drawdown_12m": 13.3,
+      "change_6m": 38.0,
+      "change_12m": 81.6,
+      "beta": 0.58,
       "ex_dividend_date": "2025-04-25",
+      "dividend_score": 3,
+      "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:45.248282"
+      "scanned_at": "2026-02-15T21:35:06.762527"
     },
     {
       "ticker": "RI.PA",
@@ -119,10 +149,16 @@
       "market_cap_b": 21.31,
       "52w_high": 107.45,
       "52w_low": 71.3,
-      "discount_from_high": 21.23,
+      "dist_from_high": 21.2,
+      "max_drawdown_12m": 28.0,
+      "change_6m": -11.3,
+      "change_12m": -9.7,
+      "beta": 0.37,
       "ex_dividend_date": "2025-11-24",
+      "dividend_score": 3,
+      "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:46.007174"
+      "scanned_at": "2026-02-15T21:35:07.763761"
     },
     {
       "ticker": "TTE.PA",
@@ -139,10 +175,16 @@
       "market_cap_b": 137.91,
       "52w_high": 65.79,
       "52w_low": 47.65,
-      "discount_from_high": 2.14,
+      "dist_from_high": 2.1,
+      "max_drawdown_12m": 20.3,
+      "change_6m": 24.3,
+      "change_12m": 16.6,
+      "beta": 0.25,
       "ex_dividend_date": "2026-03-31",
+      "dividend_score": 4,
+      "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:46.747816"
+      "scanned_at": "2026-02-15T21:35:08.778386"
     },
     {
       "ticker": "SAN.PA",
@@ -159,10 +201,16 @@
       "market_cap_b": 94.03,
       "52w_high": 110.88,
       "52w_low": 76.15,
-      "discount_from_high": 30.0,
+      "dist_from_high": 30.0,
+      "max_drawdown_12m": 26.6,
+      "change_6m": -8.6,
+      "change_12m": -23.1,
+      "beta": 0.37,
       "ex_dividend_date": "2025-05-12",
+      "dividend_score": 2,
+      "capital_score": 2,
       "sustainable": true,
-      "scanned_at": "2026-02-15T16:06:46.358374"
+      "scanned_at": "2026-02-15T21:35:08.134909"
     }
   ]
 }
