@@ -1,0 +1,89 @@
+{
+  "markets": [
+    "UK FTSE 100",
+    "Swiss SMI",
+    "US Extra"
+  ],
+  "scanned_at": "2026-02-15T16:31:59.678565",
+  "total": 6,
+  "candidates": [
+    {
+      "ticker": "LGEN.L",
+      "name": "LEGAL & GENERAL GROUP PLC",
+      "market": "UK FTSE 100",
+      "price": 268.6,
+      "currency": "GBp",
+      "dividend_yield": 8.0,
+      "div_rate": 0.21,
+      "payout_ratio": 484.3,
+      "change_6m": 3.6,
+      "sector": "Financial Services",
+      "sustainable": false
+    },
+    {
+      "ticker": "BATS.L",
+      "name": "BRITISH AMERICAN TOBACCO ",
+      "market": "UK FTSE 100",
+      "price": 4354.0,
+      "currency": "GBp",
+      "dividend_yield": 5.63,
+      "div_rate": 2.45,
+      "payout_ratio": 68.8,
+      "change_6m": 3.7,
+      "sector": "Consumer Defensive",
+      "sustainable": true
+    },
+    {
+      "ticker": "NWG.L",
+      "name": "NATWEST GROUP PLC ORD 107",
+      "market": "UK FTSE 100",
+      "price": 580.2,
+      "currency": "GBp",
+      "dividend_yield": 5.6,
+      "div_rate": 0.33,
+      "payout_ratio": 37.1,
+      "change_6m": 7.0,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "BP.L",
+      "name": "BP PLC $0.25",
+      "market": "UK FTSE 100",
+      "price": 461.0,
+      "currency": "GBp",
+      "dividend_yield": 5.3,
+      "div_rate": 0.24,
+      "payout_ratio": 9514.0,
+      "change_6m": 10.2,
+      "sector": "Energy",
+      "sustainable": false
+    },
+    {
+      "ticker": "ENB",
+      "name": "Enbridge Inc",
+      "market": "US Extra",
+      "price": 53.88,
+      "currency": "USD",
+      "dividend_yield": 5.14,
+      "div_rate": 2.77,
+      "payout_ratio": 117.1,
+      "change_6m": 13.4,
+      "sector": "Energy",
+      "sustainable": false
+    },
+    {
+      "ticker": "ZURN.SW",
+      "name": "ZURICH INSURANCE N",
+      "market": "Swiss SMI",
+      "price": 552.0,
+      "currency": "CHF",
+      "dividend_yield": 5.07,
+      "div_rate": 28.0,
+      "payout_ratio": 83.6,
+      "change_6m": -5.1,
+      "sector": "Financial Services",
+      "sustainable": true
+    }
+  ]
+}
