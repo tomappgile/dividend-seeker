@@ -1,0 +1,17 @@
+{
+  "name": "Australia Dividend",
+  "tickers": [
+    "BHP.AX",
+    "RIO.AX",
+    "CBA.AX",
+    "NAB.AX",
+    "WBC.AX",
+    "ANZ.AX",
+    "TLS.AX",
+    "WES.AX",
+    "WOW.AX",
+    "FMG.AX",
+    "STO.AX",
+    "WDS.AX"
+  ]
+}
