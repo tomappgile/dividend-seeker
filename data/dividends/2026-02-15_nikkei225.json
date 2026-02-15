@@ -1,7 +1,9 @@
 {
-  "updated_at": "2026-02-15T23:24:02.421314",
-  "total": 1,
-  "top_20": [
+  "market": "nikkei225",
+  "scanned_at": "2026-02-15T23:24:02.420372",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
     {
       "ticker": "9107.T",
       "name": "KAWASAKI KISEN KAISHA",
