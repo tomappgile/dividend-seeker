@@ -1,0 +1,26 @@
+{
+  "name": "Spain Extra",
+  "tickers": [
+    "SAN.MC",
+    "BBVA.MC",
+    "CABK.MC",
+    "SAB.MC",
+    "UNI.MC",
+    "BKT.MC",
+    "IBE.MC",
+    "ELE.MC",
+    "REE.MC",
+    "ENG.MC",
+    "NTGY.MC",
+    "TEF.MC",
+    "MAS.MC",
+    "ACS.MC",
+    "FER.MC",
+    "FCC.MC",
+    "ITX.MC",
+    "REP.MC",
+    "MAP.MC",
+    "ACX.MC",
+    "ANA.MC"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "France Extra",
+  "tickers": [
+    "BNP.PA",
+    "GLE.PA",
+    "ACA.PA",
+    "CS.PA",
+    "CNP.PA",
+    "EDF.PA",
+    "ENGI.PA",
+    "VIE.PA",
+    "RNO.PA",
+    "UG.PA",
+    "TTE.PA",
+    "SAN.PA",
+    "RI.PA",
+    "OR.PA",
+    "AIR.PA",
+    "SAF.PA"
+  ]
+}
