@@ -1,0 +1,34 @@
+{
+  "market": "retail_reits",
+  "scanned_at": "2026-02-15T22:15:31.719793",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "NNN",
+      "name": "NNN REIT, Inc.",
+      "sector": "Real Estate",
+      "industry": "REIT - Retail",
+      "currency": "USD",
+      "price": 44.34,
+      "dividend_yield": 5.41,
+      "dividend_rate": 2.4,
+      "payout_ratio": 114.01,
+      "pe_ratio": 21.42,
+      "market_cap": 8421914624,
+      "market_cap_b": 8.42,
+      "52w_high": 44.58,
+      "52w_low": 35.8,
+      "dist_from_high": 0.5,
+      "max_drawdown_12m": 13.0,
+      "change_6m": 10.5,
+      "change_12m": 16.2,
+      "beta": 0.83,
+      "ex_dividend_date": "2026-01-30",
+      "dividend_score": 1,
+      "capital_score": 4,
+      "sustainable": false,
+      "scanned_at": "2026-02-15T22:15:30.977364"
+    }
+  ]
+}
