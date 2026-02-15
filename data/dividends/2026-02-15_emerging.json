@@ -1,0 +1,193 @@
+{
+  "markets": [
+    "Latam",
+    "Asia Extended",
+    "Eastern Europe",
+    "Middle East",
+    "South Africa"
+  ],
+  "scanned_at": "2026-02-15T16:42:00.256720",
+  "total": 15,
+  "candidates": [
+    {
+      "ticker": "CMIG4.SA",
+      "name": "CEMIG       PN      N1",
+      "market": "Latam BR/MX/CL",
+      "price": 11.76,
+      "currency": "BRL",
+      "dividend_yield": 14.04,
+      "payout_ratio": 62.2,
+      "change_6m": 13.9,
+      "sector": "Utilities",
+      "sustainable": true
+    },
+    {
+      "ticker": "PETR4.SA",
+      "name": "PETROBRAS   PN      N2",
+      "market": "Latam BR/MX/CL",
+      "price": 36.89,
+      "currency": "BRL",
+      "dividend_yield": 12.57,
+      "payout_ratio": 59.0,
+      "change_6m": 27.3,
+      "sector": "Energy",
+      "sustainable": true
+    },
+    {
+      "ticker": "GFNORTEO.MX",
+      "name": "GRUPO FINANCIERO BANORTE",
+      "market": "Latam BR/MX/CL",
+      "price": 204.87,
+      "currency": "MXN",
+      "dividend_yield": 8.31,
+      "payout_ratio": 78.7,
+      "change_6m": 26.1,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "VALE3.SA",
+      "name": "VALE        ON      NM",
+      "market": "Latam BR/MX/CL",
+      "price": 87.03,
+      "currency": "BRL",
+      "dividend_yield": 7.92,
+      "payout_ratio": 208.6,
+      "change_6m": 69.3,
+      "sector": "Basic Materials",
+      "sustainable": false
+    },
+    {
+      "ticker": "TAEE11.SA",
+      "name": "TAESA       UNT     N2",
+      "market": "Latam BR/MX/CL",
+      "price": 43.6,
+      "currency": "BRL",
+      "dividend_yield": 7.41,
+      "payout_ratio": 0,
+      "change_6m": 37.7,
+      "sector": "Utilities",
+      "sustainable": true
+    },
+    {
+      "ticker": "PZU.WA",
+      "name": "PZU",
+      "market": "Eastern Europe",
+      "price": 68.46,
+      "currency": "PLN",
+      "dividend_yield": 6.53,
+      "payout_ratio": 55.9,
+      "change_6m": 12.9,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "PTT.BK",
+      "name": "PTT_PTT",
+      "market": "Asia JP/KR/TW",
+      "price": 35.75,
+      "currency": "THB",
+      "dividend_yield": 6.15,
+      "payout_ratio": 85.3,
+      "change_6m": 13.1,
+      "sector": "Energy",
+      "sustainable": true
+    },
+    {
+      "ticker": "PKO.WA",
+      "name": "PKOBP",
+      "market": "Eastern Europe",
+      "price": 89.34,
+      "currency": "PLN",
+      "dividend_yield": 6.13,
+      "payout_ratio": 65.9,
+      "change_6m": 4.9,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "TUPRS.IS",
+      "name": "TUPRAS",
+      "market": "Eastern Europe",
+      "price": 221.6,
+      "currency": "TRY",
+      "dividend_yield": 6.09,
+      "payout_ratio": 132.8,
+      "change_6m": 41.1,
+      "sector": "Energy",
+      "sustainable": false
+    },
+    {
+      "ticker": "BTI.JO",
+      "name": "British American Tob plc",
+      "market": "South Africa",
+      "price": 94845.0,
+      "currency": "ZAc",
+      "dividend_yield": 5.62,
+      "payout_ratio": 69.0,
+      "change_6m": -4.5,
+      "sector": "Consumer Defensive",
+      "sustainable": true
+    },
+    {
+      "ticker": "PKN.WA",
+      "name": "PKNORLEN",
+      "market": "Eastern Europe",
+      "price": 108.36,
+      "currency": "PLN",
+      "dividend_yield": 5.54,
+      "payout_ratio": 108.3,
+      "change_6m": 37.9,
+      "sector": "Energy",
+      "sustainable": false
+    },
+    {
+      "ticker": "2010.SR",
+      "name": "Saudi Basic Industries Co",
+      "market": "Middle East",
+      "price": 57.9,
+      "currency": "SAR",
+      "dividend_yield": 5.52,
+      "payout_ratio": 3777.8,
+      "change_6m": 2.5,
+      "sector": "Basic Materials",
+      "sustainable": false
+    },
+    {
+      "ticker": "SBK.JO",
+      "name": "Standard Bank Group Ltd",
+      "market": "South Africa",
+      "price": 31372.0,
+      "currency": "ZAc",
+      "dividend_yield": 5.21,
+      "payout_ratio": 54.3,
+      "change_6m": 29.7,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "FSR.JO",
+      "name": "Firstrand Ltd",
+      "market": "South Africa",
+      "price": 9500.0,
+      "currency": "ZAc",
+      "dividend_yield": 5.2,
+      "payout_ratio": 58.0,
+      "change_6m": 22.5,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "2222.SR",
+      "name": "Saudi Arabian Oil Co.",
+      "market": "Middle East",
+      "price": 25.78,
+      "currency": "SAR",
+      "dividend_yield": 5.04,
+      "payout_ratio": 86.0,
+      "change_6m": 9.6,
+      "sector": "Energy",
+      "sustainable": true
+    }
+  ]
+}
