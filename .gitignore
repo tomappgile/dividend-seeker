@@ -16,3 +16,4 @@ data/logs/
 # Keep DB in repo for Railway
 !data/dividend_seeker.db
 *.db
+data/dividend_seeker.db
