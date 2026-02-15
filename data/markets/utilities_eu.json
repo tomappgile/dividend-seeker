@@ -1,0 +1,19 @@
+{
+  "name": "European Utilities",
+  "tickers": [
+    "IBE.MC",
+    "ELE.MC",
+    "REE.MC",
+    "EDF.PA",
+    "VIE.PA",
+    "E.MI",
+    "A2A.MI",
+    "HER.MI",
+    "RWE.DE",
+    "1COV.DE",
+    "FORTUM.HE",
+    "ELI1V.HE",
+    "ORSTED.CO",
+    "CEZ.PR"
+  ]
+}

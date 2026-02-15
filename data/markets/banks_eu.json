@@ -1,0 +1,19 @@
+{
+  "name": "European Banks Extra",
+  "tickers": [
+    "SAN.MC",
+    "BBVA.MC",
+    "CABK.MC",
+    "UCG.MI",
+    "BMPS.MI",
+    "BAMI.MI",
+    "GLE.PA",
+    "ACA.PA",
+    "DBK.DE",
+    "CBK.DE",
+    "KBC.BR",
+    "INGA.AS",
+    "DANSKE.CO",
+    "SWEDA.ST"
+  ]
+}
