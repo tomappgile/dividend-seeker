@@ -1,0 +1,12 @@
+{
+  "name": "European Autos",
+  "tickers": [
+    "BMW.DE",
+    "MBG.DE",
+    "VOW3.DE",
+    "PAH3.DE",
+    "RACE.MI",
+    "STLAM.MI",
+    "RNO.PA"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "US Financials Large",
+  "tickers": [
+    "JPM",
+    "BAC",
+    "WFC",
+    "C",
+    "GS",
+    "MS",
+    "USB",
+    "PNC",
+    "TFC",
+    "FITB",
+    "KEY",
+    "RF",
+    "MET",
+    "AIG",
+    "ALL",
+    "TRV",
+    "BLK",
+    "SCHW",
+    "SPGI",
+    "ICE"
+  ]
+}

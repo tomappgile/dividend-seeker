@@ -1,7 +1,9 @@
 {
-  "updated_at": "2026-02-15T21:47:56.525631",
-  "total": 5,
-  "top_20": [
+  "market": "autos_eu",
+  "scanned_at": "2026-02-15T21:47:54.441416",
+  "min_yield": 5.0,
+  "total_candidates": 5,
+  "candidates": [
     {
       "ticker": "STLAM.MI",
       "name": "STELLANTIS",

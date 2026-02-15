@@ -1,0 +1,23 @@
+{
+  "name": "Infrastructure",
+  "tickers": [
+    "AMT",
+    "CCI",
+    "SBAC",
+    "DLR",
+    "EQIX",
+    "PLD",
+    "PSA",
+    "EXR",
+    "NEE",
+    "DUK",
+    "SO",
+    "D",
+    "AEP",
+    "XEL",
+    "AWK",
+    "WTRG",
+    "FER.MC",
+    "ACS.MC"
+  ]
+}
