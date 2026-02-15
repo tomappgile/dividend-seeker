@@ -22,5 +22,10 @@ for market in $MARKETS; do
     python scripts/scan_dividends.py "$market" || echo "⚠️ Error scanning $market"
 done
 
+# Sync results to SQLite database
+echo ""
+echo "💾 Syncing to database..."
+python scripts/sync_db.py
+
 echo ""
 echo "✅ Nightly scan complete at $(date)"

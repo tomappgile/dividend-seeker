@@ -31,6 +31,157 @@ def load_market_tickers(market: str) -> list[str]:
     return data.get("tickers", [])
 
 
+def calc_dividend_score(payout_ratio: float, dividend_yield: float, years_paying: int = 0) -> int:
+    """
+    Calculate dividend safety score (1-5 stars).
+    Higher = safer dividend, more likely to be paid.
+    """
+    score = 3  # Default: normal
+    
+    # Payout ratio is the main factor
+    if payout_ratio <= 0:
+        score = 1  # No data = risky
+    elif payout_ratio <= 50:
+        score = 5  # Very safe
+    elif payout_ratio <= 70:
+        score = 4  # Safe
+    elif payout_ratio <= 85:
+        score = 3  # Normal
+    elif payout_ratio <= 100:
+        score = 2  # Stretched
+    else:
+        score = 1  # Unsustainable (>100%)
+    
+    # Bonus for very high yields with low payout (rare, good sign)
+    if dividend_yield > 6 and payout_ratio < 60:
+        score = min(5, score + 1)
+    
+    # Penalty for extreme yields (often a trap)
+    if dividend_yield > 12 and payout_ratio > 90:
+        score = max(1, score - 1)
+    
+    return score
+
+
+def calc_capital_score(
+    dist_from_high: float,  # % distance from 52w high (current)
+    max_drawdown_12m: float,  # % max peak-to-trough drop in 12m
+    change_12m: float,  # % price change over 12 months
+    beta: float = 1.0
+) -> int:
+    """
+    Calculate capital safety score (1-5 stars).
+    Higher = more stable price, less likely to lose money.
+    
+    Factors:
+    - dist_from_high: How far from 52w high (lower = better)
+    - max_drawdown_12m: Worst drop in last 12m (lower = better)
+    - change_12m: 12-month return (higher = better)
+    - beta: Volatility vs market (lower = better)
+    """
+    points = 0
+    
+    # Distance from 52w high (lower is better) - 25%
+    if dist_from_high <= 5:
+        points += 2
+    elif dist_from_high <= 12:
+        points += 1
+    elif dist_from_high <= 20:
+        points += 0
+    elif dist_from_high <= 30:
+        points -= 1
+    else:
+        points -= 2
+    
+    # Max drawdown 12m (lower is better) - 30%
+    if max_drawdown_12m <= 10:
+        points += 3
+    elif max_drawdown_12m <= 18:
+        points += 2
+    elif max_drawdown_12m <= 28:
+        points += 1
+    elif max_drawdown_12m <= 40:
+        points += 0
+    else:
+        points -= 1
+    
+    # 12-month return (higher is better) - 30%
+    if change_12m >= 25:
+        points += 3
+    elif change_12m >= 10:
+        points += 2
+    elif change_12m >= 0:
+        points += 1
+    elif change_12m >= -15:
+        points += 0
+    else:
+        points -= 1
+    
+    # Beta (lower volatility is better) - 15%
+    if beta <= 0.7:
+        points += 2
+    elif beta <= 1.0:
+        points += 1
+    elif beta <= 1.4:
+        points += 0
+    else:
+        points -= 1
+    
+    # Convert points to 1-5 score (max 10, min -5)
+    if points >= 8:
+        return 5
+    elif points >= 5:
+        return 4
+    elif points >= 2:
+        return 3
+    elif points >= 0:
+        return 2
+    else:
+        return 1
+
+
+def get_price_metrics(stock) -> dict:
+    """
+    Calculate price-based metrics from 12-month history.
+    Returns: change_6m, change_12m, max_drawdown_12m
+    """
+    metrics = {
+        'change_6m': 0.0,
+        'change_12m': 0.0,
+        'max_drawdown_12m': 0.0
+    }
+    
+    try:
+        hist = stock.history(period="1y")
+        if len(hist) < 10:
+            return metrics
+        
+        closes = hist['Close']
+        end_price = closes.iloc[-1]
+        
+        # 12-month change
+        start_price_12m = closes.iloc[0]
+        if start_price_12m > 0:
+            metrics['change_12m'] = round(((end_price - start_price_12m) / start_price_12m) * 100, 1)
+        
+        # 6-month change (approximately half the data)
+        mid_idx = len(closes) // 2
+        start_price_6m = closes.iloc[mid_idx]
+        if start_price_6m > 0:
+            metrics['change_6m'] = round(((end_price - start_price_6m) / start_price_6m) * 100, 1)
+        
+        # Max drawdown (peak-to-trough)
+        # Calculate running maximum and drawdown at each point
+        running_max = closes.expanding().max()
+        drawdowns = ((closes - running_max) / running_max) * 100
+        metrics['max_drawdown_12m'] = round(abs(drawdowns.min()), 1)
+        
+    except Exception as e:
+        pass
+    
+    return metrics
+
+
 def get_stock_data(ticker: str) -> dict | None:
     """Fetch dividend and price data for a stock."""
     try:
@@ -55,20 +206,31 @@ def get_stock_data(ticker: str) -> dict | None:
         industry = info.get("industry", "Unknown")
         name = info.get("shortName") or info.get("longName", ticker)
         currency = info.get("currency", "USD")
+        beta = info.get("beta", 1.0) or 1.0
         
         # 52-week data
         fifty_two_week_high = info.get("fiftyTwoWeekHigh", 0) or 0
         fifty_two_week_low = info.get("fiftyTwoWeekLow", 0) or 0
         
-        # Calculate discount from 52-week high
-        discount_from_high = 0
+        # Calculate distance from 52-week high
+        dist_from_high = 0
         if fifty_two_week_high > 0 and current_price > 0:
-            discount_from_high = ((fifty_two_week_high - current_price) / fifty_two_week_high) * 100
+            dist_from_high = ((fifty_two_week_high - current_price) / fifty_two_week_high) * 100
+        
+        # Get price metrics (6m change, 12m change, max drawdown)
+        price_metrics = get_price_metrics(stock)
+        change_6m = price_metrics['change_6m']
+        change_12m = price_metrics['change_12m']
+        max_drawdown_12m = price_metrics['max_drawdown_12m']
         
         # Ex-dividend date
         ex_div_date = info.get("exDividendDate")
         if ex_div_date:
             ex_div_date = datetime.fromtimestamp(ex_div_date).strftime("%Y-%m-%d")
+        
+        # Calculate risk scores (1-5 stars)
+        dividend_score = calc_dividend_score(payout_ratio, dividend_yield_pct)
+        capital_score = calc_capital_score(dist_from_high, max_drawdown_12m, change_12m, beta)
         
         return {
             "ticker": ticker,
@@ -85,8 +247,14 @@ def get_stock_data(ticker: str) -> dict | None:
             "market_cap_b": round(market_cap / 1e9, 2) if market_cap else 0,
             "52w_high": round(fifty_two_week_high, 2),
             "52w_low": round(fifty_two_week_low, 2),
-            "discount_from_high": round(discount_from_high, 2),
+            "dist_from_high": round(dist_from_high, 1),  # % below 52w high
+            "max_drawdown_12m": max_drawdown_12m,         # max peak-to-trough 12m
+            "change_6m": change_6m,
+            "change_12m": change_12m,
+            "beta": round(beta, 2),
             "ex_dividend_date": ex_div_date,
+            "dividend_score": dividend_score,  # 1-5 stars: dividend safety
+            "capital_score": capital_score,    # 1-5 stars: capital safety
             "sustainable": payout_ratio <= MAX_PAYOUT_RATIO,
             "scanned_at": datetime.now().isoformat()
         }
