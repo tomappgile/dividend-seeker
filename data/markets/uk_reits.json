@@ -1,0 +1,15 @@
+{
+  "name": "UK REITs",
+  "tickers": [
+    "LAND.L",
+    "BLND.L",
+    "SGRO.L",
+    "BBOX.L",
+    "HMSO.L",
+    "PHP.L",
+    "WHR.L",
+    "UTG.L",
+    "SHED.L",
+    "GRI.L"
+  ]
+}
