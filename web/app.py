@@ -14,11 +14,54 @@ from datetime import datetime
 app = Flask(__name__, static_folder='static')
 CORS(app)
 
-DB_PATH = Path(__file__).parent.parent / 'data' / 'dividend_seeker.db'
-DATA_PATH = Path(__file__).parent.parent / 'data'
+import os
+
+# Handle paths for both local and Railway deployment
+BASE_DIR = Path(__file__).parent.parent
+DB_PATH = BASE_DIR / 'data' / 'dividend_seeker.db'
+DATA_PATH = BASE_DIR / 'data'
+
+# Create data directory if it doesn't exist
+DATA_PATH.mkdir(parents=True, exist_ok=True)
+
+
+def init_db():
+    """Initialize database if it doesn't exist"""
+    if not DB_PATH.exists():
+        conn = sqlite3.connect(DB_PATH)
+        cursor = conn.cursor()
+        cursor.executescript('''
+            CREATE TABLE IF NOT EXISTS stocks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ticker TEXT UNIQUE NOT NULL,
+                name TEXT, sector TEXT, industry TEXT, currency TEXT, market TEXT,
+                ocean_accessible BOOLEAN DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+            CREATE TABLE IF NOT EXISTS snapshots (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                ticker TEXT NOT NULL, scan_date DATE NOT NULL,
+                price REAL, dividend_yield REAL, dividend_rate REAL,
+                payout_ratio REAL, pe_ratio REAL, market_cap REAL,
+                week_52_high REAL, week_52_low REAL, change_6m REAL,
+                sustainable BOOLEAN,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(ticker, scan_date)
+            );
+            CREATE TABLE IF NOT EXISTS scans (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                scan_date DATE NOT NULL, markets_scanned TEXT,
+                total_scanned INTEGER, candidates_found INTEGER,
+                duration_seconds REAL, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            );
+        ''')
+        conn.commit()
+        conn.close()
 
 
 def get_db():
+    init_db()
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
