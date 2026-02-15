@@ -287,11 +287,39 @@
                     </div>
                     <div class="card">
                         <div class="card-label">P/E Ratio</div>
-                        <div class="card-value">${s.pe_ratio?.toFixed(1) || 'N/A'}</div>
+                        <div class="card-value">${s.pe_ratio?.toFixed(1) || analysis?.pe_ratio?.toFixed(1) || 'N/A'}</div>
                     </div>
                     <div class="card">
                         <div class="card-label">Market Cap</div>
-                        <div class="card-value">${s.market_cap_b || 'N/A'}B</div>
+                        <div class="card-value">${s.market_cap_b || analysis?.market_cap_b || 'N/A'}B</div>
+                    </div>
+                </div>
+                
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-label">📈 Máximo 52 semanas</div>
+                        <div class="card-value">${s.currency || '€'} ${analysis?.week_52_high?.toFixed(2) || 'N/A'}</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
+                            ${analysis?.week_52_high_date || ''}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">📉 Mínimo 52 semanas</div>
+                        <div class="card-value">${s.currency || '€'} ${analysis?.week_52_low?.toFixed(2) || 'N/A'}</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
+                            ${analysis?.week_52_low_date || ''}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Distancia del máximo</div>
+                        <div class="card-value ${analysis?.discount_from_high > 20 ? 'green' : ''}">${analysis?.discount_from_high?.toFixed(1) || 'N/A'}%</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
+                            ${analysis?.discount_from_high > 20 ? '🔥 Oportunidad' : ''}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Próx. Ex-Dividendo</div>
+                        <div class="card-value" style="font-size: 18px;">${analysis?.ex_dividend_date || 'N/A'}</div>
                     </div>
                 </div>
                 

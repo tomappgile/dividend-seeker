@@ -168,6 +168,25 @@ def generate_analysis(ticker):
             'week_52_low': info.get('fiftyTwoWeekLow'),
         }
         
+        # Calculate discount from 52-week high
+        if analysis['week_52_high'] and analysis['price']:
+            analysis['discount_from_high'] = round(
+                ((analysis['week_52_high'] - analysis['price']) / analysis['week_52_high']) * 100, 1
+            )
+        
+        # Get ex-dividend date
+        ex_div = info.get('exDividendDate')
+        if ex_div:
+            from datetime import datetime as dt
+            analysis['ex_dividend_date'] = dt.fromtimestamp(ex_div).strftime('%Y-%m-%d')
+        
+        # Find dates of 52-week high and low from history
+        if len(hist) > 0:
+            high_idx = hist['High'].idxmax()
+            low_idx = hist['Low'].idxmin()
+            analysis['week_52_high_date'] = high_idx.strftime('%d %b %Y')
+            analysis['week_52_low_date'] = low_idx.strftime('%d %b %Y')
+        
         # Performance
         if len(hist) > 0:
             current = hist['Close'].iloc[-1]
