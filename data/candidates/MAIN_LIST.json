@@ -1,8 +1,8 @@
 {
   "broker": "CaixaBank Ocean",
-  "updated_at": "2026-02-15T22:07:43.925442",
+  "updated_at": "2026-02-15T22:08:54.346561",
   "scan_date": "2026-02-15",
-  "total": 186,
+  "total": 188,
   "stocks": [
     {
       "ticker": "FSK",
@@ -2137,18 +2137,6 @@
       "scanned_at": "2026-02-15T21:47:53.974386"
     },
     {
-      "ticker": "SUN.AX",
-      "name": "SUNCORP FPO [SUN]",
-      "market": "Australia ASX",
-      "price": 15.94,
-      "currency": "AUD",
-      "dividend_yield": 6.15,
-      "payout_ratio": 73.5,
-      "change_6m": -18.6,
-      "sector": "Financial Services",
-      "sustainable": true
-    },
-    {
       "ticker": "DNB.OL",
       "name": "DNB BANK ASA",
       "market": "Nordic",
@@ -2157,6 +2145,18 @@
       "dividend_yield": 6.15,
       "payout_ratio": 59.0,
       "change_6m": 9.4,
+      "sector": "Financial Services",
+      "sustainable": true
+    },
+    {
+      "ticker": "SUN.AX",
+      "name": "SUNCORP FPO [SUN]",
+      "market": "Australia ASX",
+      "price": 15.94,
+      "currency": "AUD",
+      "dividend_yield": 6.15,
+      "payout_ratio": 73.5,
+      "change_6m": -18.6,
       "sector": "Financial Services",
       "sustainable": true
     },
@@ -2545,6 +2545,32 @@
       "scanned_at": "2026-02-15T21:44:08.086497"
     },
     {
+      "ticker": "BBY",
+      "name": "Best Buy Co., Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Specialty Retail",
+      "currency": "USD",
+      "price": 65.8,
+      "dividend_yield": 5.78,
+      "dividend_rate": 3.8,
+      "payout_ratio": 125.08,
+      "pe_ratio": 21.72,
+      "market_cap": 13824663552,
+      "market_cap_b": 13.82,
+      "52w_high": 91.68,
+      "52w_low": 54.99,
+      "dist_from_high": 28.2,
+      "max_drawdown_12m": 37.6,
+      "change_6m": -5.7,
+      "change_12m": -23.9,
+      "beta": 1.47,
+      "ex_dividend_date": "2025-12-16",
+      "dividend_score": 1,
+      "capital_score": 1,
+      "sustainable": false,
+      "scanned_at": "2026-02-15T22:08:20.392091"
+    },
+    {
       "ticker": "VZ",
       "name": "Verizon Communications Inc.",
       "sector": "Communication Services",
@@ -2606,7 +2632,7 @@
       "dividend_score": 5,
       "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-15T20:38:40.128559"
+      "scanned_at": "2026-02-15T22:08:43.944566"
     },
     {
       "ticker": "CS.PA",
@@ -2855,18 +2881,6 @@
       "scanned_at": "2026-02-15T21:44:09.175059"
     },
     {
-      "ticker": "BTI.JO",
-      "name": "British American Tob plc",
-      "market": "South Africa",
-      "price": 94845.0,
-      "currency": "ZAc",
-      "dividend_yield": 5.62,
-      "payout_ratio": 69.0,
-      "change_6m": -4.5,
-      "sector": "Consumer Defensive",
-      "sustainable": true
-    },
-    {
       "ticker": "ELISA.HE",
       "name": "Elisa Corporation",
       "sector": "Communication Services",
@@ -2891,6 +2905,18 @@
       "capital_score": 3,
       "sustainable": false,
       "scanned_at": "2026-02-15T21:45:32.345016"
+    },
+    {
+      "ticker": "BTI.JO",
+      "name": "British American Tob plc",
+      "market": "South Africa",
+      "price": 94845.0,
+      "currency": "ZAc",
+      "dividend_yield": 5.62,
+      "payout_ratio": 69.0,
+      "change_6m": -4.5,
+      "sector": "Consumer Defensive",
+      "sustainable": true
     },
     {
       "ticker": "BTI",
@@ -2969,6 +2995,32 @@
       "capital_score": 4,
       "sustainable": true,
       "scanned_at": "2026-02-15T21:35:33.674314"
+    },
+    {
+      "ticker": "TROW",
+      "name": "T. Rowe Price Group, Inc.",
+      "sector": "Financial Services",
+      "industry": "Asset Management",
+      "currency": "USD",
+      "price": 93.76,
+      "dividend_yield": 5.55,
+      "dividend_rate": 5.2,
+      "payout_ratio": 54.98,
+      "pe_ratio": 10.15,
+      "market_cap": 20495935488,
+      "market_cap_b": 20.5,
+      "52w_high": 118.22,
+      "52w_low": 77.85,
+      "dist_from_high": 20.7,
+      "max_drawdown_12m": 25.0,
+      "change_6m": -10.3,
+      "change_12m": -7.9,
+      "beta": 1.54,
+      "ex_dividend_date": "2026-03-16",
+      "dividend_score": 4,
+      "capital_score": 1,
+      "sustainable": true,
+      "scanned_at": "2026-02-15T22:08:17.900645"
     },
     {
       "ticker": "RI.PA",
@@ -3239,32 +3291,6 @@
       "scanned_at": "2026-02-15T20:39:01.513115"
     },
     {
-      "ticker": "BBD",
-      "name": "Banco Bradesco Sa",
-      "sector": "Financial Services",
-      "industry": "Banks - Regional",
-      "currency": "USD",
-      "price": 3.98,
-      "dividend_yield": 5.38,
-      "dividend_rate": 0.21,
-      "payout_ratio": 68.05,
-      "pe_ratio": 9.71,
-      "market_cap": 42096504832,
-      "market_cap_b": 42.1,
-      "52w_high": 4.29,
-      "52w_low": 1.93,
-      "dist_from_high": 7.2,
-      "max_drawdown_12m": 12.1,
-      "change_6m": 34.5,
-      "change_12m": 91.4,
-      "beta": 0.29,
-      "ex_dividend_date": "2026-03-04",
-      "dividend_score": 4,
-      "capital_score": 5,
-      "sustainable": true,
-      "scanned_at": "2026-02-15T22:06:38.215203"
-    },
-    {
       "ticker": "TRYG.CO",
       "name": "Tryg A/S",
       "sector": "Financial Services",
@@ -3289,6 +3315,32 @@
       "capital_score": 4,
       "sustainable": true,
       "scanned_at": "2026-02-15T21:44:19.181373"
+    },
+    {
+      "ticker": "BBD",
+      "name": "Banco Bradesco Sa",
+      "sector": "Financial Services",
+      "industry": "Banks - Regional",
+      "currency": "USD",
+      "price": 3.98,
+      "dividend_yield": 5.38,
+      "dividend_rate": 0.21,
+      "payout_ratio": 68.05,
+      "pe_ratio": 9.71,
+      "market_cap": 42096504832,
+      "market_cap_b": 42.1,
+      "52w_high": 4.29,
+      "52w_low": 1.93,
+      "dist_from_high": 7.2,
+      "max_drawdown_12m": 12.1,
+      "change_6m": 34.5,
+      "change_12m": 91.4,
+      "beta": 0.29,
+      "ex_dividend_date": "2026-03-04",
+      "dividend_score": 4,
+      "capital_score": 5,
+      "sustainable": true,
+      "scanned_at": "2026-02-15T22:06:38.215203"
     },
     {
       "ticker": "ASRNL.AS",
@@ -3613,18 +3665,6 @@
       "scanned_at": "2026-02-15T22:07:30.025260"
     },
     {
-      "ticker": "FSR.JO",
-      "name": "Firstrand Ltd",
-      "market": "South Africa",
-      "price": 9500.0,
-      "currency": "ZAc",
-      "dividend_yield": 5.2,
-      "payout_ratio": 58.0,
-      "change_6m": 22.5,
-      "sector": "Financial Services",
-      "sustainable": true
-    },
-    {
       "ticker": "DANSKE.CO",
       "name": "Danske Bank A/S",
       "sector": "Financial Services",
@@ -3649,6 +3689,18 @@
       "capital_score": 4,
       "sustainable": true,
       "scanned_at": "2026-02-15T21:44:12.311187"
+    },
+    {
+      "ticker": "FSR.JO",
+      "name": "Firstrand Ltd",
+      "market": "South Africa",
+      "price": 9500.0,
+      "currency": "ZAc",
+      "dividend_yield": 5.2,
+      "payout_ratio": 58.0,
+      "change_6m": 22.5,
+      "sector": "Financial Services",
+      "sustainable": true
     },
     {
       "ticker": "FMG.AX",

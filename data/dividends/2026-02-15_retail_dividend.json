@@ -1,0 +1,34 @@
+{
+  "market": "retail_dividend",
+  "scanned_at": "2026-02-15T22:08:21.029646",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "BBY",
+      "name": "Best Buy Co., Inc.",
+      "sector": "Consumer Cyclical",
+      "industry": "Specialty Retail",
+      "currency": "USD",
+      "price": 65.8,
+      "dividend_yield": 5.78,
+      "dividend_rate": 3.8,
+      "payout_ratio": 125.08,
+      "pe_ratio": 21.72,
+      "market_cap": 13824663552,
+      "market_cap_b": 13.82,
+      "52w_high": 91.68,
+      "52w_low": 54.99,
+      "dist_from_high": 28.2,
+      "max_drawdown_12m": 37.6,
+      "change_6m": -5.7,
+      "change_12m": -23.9,
+      "beta": 1.47,
+      "ex_dividend_date": "2025-12-16",
+      "dividend_score": 1,
+      "capital_score": 1,
+      "sustainable": false,
+      "scanned_at": "2026-02-15T22:08:20.392091"
+    }
+  ]
+}
