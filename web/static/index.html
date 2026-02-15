@@ -186,8 +186,8 @@
                 <div class="stat-label">Yield Máximo</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="tier1Count">-</div>
-                <div class="stat-label">Tier 1 (≥6%)</div>
+                <div class="stat-value" id="topScoreCount">-</div>
+                <div class="stat-label">Score ≥8/10</div>
             </div>
         </div>
         
@@ -206,10 +206,24 @@
                 <option value="8">Yield ≥ 8%</option>
                 <option value="10">Yield ≥ 10%</option>
             </select>
-            <label style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" id="filterSustainable">
-                Solo sostenibles
-            </label>
+            <select id="filterDivScore">
+                <option value="0">Div Score: Todos</option>
+                <option value="3">Div ≥ ⭐⭐⭐</option>
+                <option value="4">Div ≥ ⭐⭐⭐⭐</option>
+                <option value="5">Div = ⭐⭐⭐⭐⭐</option>
+            </select>
+            <select id="filterCapScore">
+                <option value="0">Cap Score: Todos</option>
+                <option value="3">Cap ≥ ⭐⭐⭐</option>
+                <option value="4">Cap ≥ ⭐⭐⭐⭐</option>
+                <option value="5">Cap = ⭐⭐⭐⭐⭐</option>
+            </select>
+            <select id="sortBy">
+                <option value="yield">Ordenar: Yield</option>
+                <option value="score">Ordenar: Score Total</option>
+                <option value="dividend_score">Ordenar: Div Score</option>
+                <option value="capital_score">Ordenar: Cap Score</option>
+            </select>
             <button onclick="loadStocks()">Filtrar</button>
         </div>
         
@@ -219,11 +233,12 @@
                     <th>Ticker</th>
                     <th>Nombre</th>
                     <th>Mercado</th>
-                    <th>Sector</th>
-                    <th>Precio</th>
                     <th>Yield</th>
-                    <th>6M</th>
-                    <th>Estado</th>
+                    <th>12M</th>
+                    <th>MaxDD</th>
+                    <th>Div</th>
+                    <th>Cap</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody id="stocksTable"></tbody>
@@ -240,8 +255,13 @@
             document.getElementById('totalStocks').textContent = data.total_stocks;
             document.getElementById('avgYield').textContent = data.avg_yield + '%';
             document.getElementById('maxYield').textContent = data.max_yield + '%';
-            document.getElementById('tier1Count').textContent = data.tier1_count;
             document.getElementById('lastScan').textContent = data.last_scan || 'N/A';
+            
+            // Count stocks with score >= 8
+            const topRes = await fetch(`${API}/api/top-scores?limit=200`);
+            const topStocks = await topRes.json();
+            const highScore = topStocks.filter(s => (s.total_score || 0) >= 8).length;
+            document.getElementById('topScoreCount').textContent = highScore;
         }
         
         async function loadMarkets() {
@@ -267,12 +287,25 @@
             });
         }
         
+        function stars(n) {
+            return '⭐'.repeat(n || 0);
+        }
+        
+        function scoreColor(score) {
+            if (score >= 5) return 'var(--accent)';
+            if (score >= 4) return '#22d3ee';
+            if (score >= 3) return 'var(--warning)';
+            return 'var(--danger)';
+        }
+        
         async function loadStocks() {
             const market = document.getElementById('filterMarket').value;
             const minYield = document.getElementById('filterYield').value;
-            const sustainable = document.getElementById('filterSustainable').checked;
+            const minDivScore = document.getElementById('filterDivScore').value;
+            const minCapScore = document.getElementById('filterCapScore').value;
+            const sortBy = document.getElementById('sortBy').value;
             
-            let url = `${API}/api/stocks?min_yield=${minYield}&sustainable=${sustainable}`;
+            let url = `${API}/api/stocks?min_yield=${minYield}&min_div_score=${minDivScore}&min_cap_score=${minCapScore}&sort=${sortBy}`;
             if (market) url += `&market=${encodeURIComponent(market)}`;
             
             const res = await fetch(url);
@@ -281,22 +314,25 @@
             const tbody = document.getElementById('stocksTable');
             tbody.innerHTML = stocks.map(s => {
                 const yieldClass = s.dividend_yield >= 10 ? 'ultra' : s.dividend_yield >= 7 ? 'high' : '';
-                const trendClass = (s.change_6m || 0) > 0 ? 'up' : 'down';
-                const trendIcon = (s.change_6m || 0) > 0 ? '▲' : '▼';
-                const badge = s.sustainable ? 
-                    '<span class="badge sustainable">✓ Sostenible</span>' : 
-                    '<span class="badge risky">⚠ Riesgo</span>';
+                const change12m = s.change_12m || 0;
+                const trendClass = change12m > 0 ? 'up' : 'down';
+                const trendIcon = change12m > 0 ? '▲' : '▼';
+                const divScore = s.dividend_score || 0;
+                const capScore = s.capital_score || 0;
+                const totalScore = divScore + capScore;
+                const maxDD = s.max_drawdown_12m || 0;
                 
                 return `
                     <tr onclick="window.location.href='/stock.html?t=${s.ticker}'" style="cursor: pointer;">
                         <td class="ticker">${s.ticker}</td>
-                        <td>${s.name || '-'}</td>
-                        <td>${s.market || '-'}</td>
-                        <td>${s.sector || '-'}</td>
-                        <td>${s.currency || '$'}${s.price?.toFixed(2) || '-'}</td>
+                        <td>${(s.name || '-').substring(0, 20)}</td>
+                        <td>${s.ocean_market || s.market || '-'}</td>
                         <td class="yield ${yieldClass}">${s.dividend_yield?.toFixed(1)}%</td>
-                        <td class="trend ${trendClass}">${trendIcon} ${Math.abs(s.change_6m || 0).toFixed(1)}%</td>
-                        <td>${badge}</td>
+                        <td class="trend ${trendClass}">${trendIcon} ${Math.abs(change12m).toFixed(0)}%</td>
+                        <td style="color: ${maxDD > 25 ? 'var(--danger)' : 'var(--muted)'}">${maxDD.toFixed(0)}%</td>
+                        <td style="color: ${scoreColor(divScore)}">${stars(divScore)}</td>
+                        <td style="color: ${scoreColor(capScore)}">${stars(capScore)}</td>
+                        <td style="font-weight: bold; color: ${scoreColor(totalScore/2)}">${totalScore}/10</td>
                     </tr>
                 `;
             }).join('');

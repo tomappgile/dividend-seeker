@@ -29,8 +29,14 @@ def load_candidates():
 
 
 def get_all_stocks():
-    """Get all stocks from all tiers"""
+    """Get all stocks from all tiers or flat list"""
     data = load_candidates()
+    
+    # New format: flat 'stocks' list
+    if 'stocks' in data:
+        return data['stocks']
+    
+    # Old format: tiered lists
     all_stocks = (
         data.get('tier1_high_sustainable', []) +
         data.get('tier2_moderate_sustainable', []) +
@@ -83,6 +89,9 @@ def api_stocks():
     min_yield = request.args.get('min_yield', 5, type=float)
     market = request.args.get('market', None)
     sustainable_only = request.args.get('sustainable', 'false') == 'true'
+    min_div_score = request.args.get('min_div_score', 0, type=int)
+    min_cap_score = request.args.get('min_cap_score', 0, type=int)
+    sort_by = request.args.get('sort', 'yield')  # yield, score, dividend_score, capital_score
     limit = request.args.get('limit', 100, type=int)
     
     stocks = get_all_stocks()
@@ -96,12 +105,48 @@ def api_stocks():
             continue
         if sustainable_only and not s.get('sustainable', True):
             continue
+        if s.get('dividend_score', 0) < min_div_score:
+            continue
+        if s.get('capital_score', 0) < min_cap_score:
+            continue
         filtered.append(s)
     
-    # Sort by yield
-    filtered.sort(key=lambda x: x.get('dividend_yield', 0), reverse=True)
+    # Sort
+    if sort_by == 'score':
+        filtered.sort(key=lambda x: (x.get('dividend_score', 0) + x.get('capital_score', 0), x.get('dividend_yield', 0)), reverse=True)
+    elif sort_by == 'dividend_score':
+        filtered.sort(key=lambda x: (x.get('dividend_score', 0), x.get('dividend_yield', 0)), reverse=True)
+    elif sort_by == 'capital_score':
+        filtered.sort(key=lambda x: (x.get('capital_score', 0), x.get('dividend_yield', 0)), reverse=True)
+    else:
+        filtered.sort(key=lambda x: x.get('dividend_yield', 0), reverse=True)
     
     return jsonify(filtered[:limit])
+
+
+@app.route('/api/top-scores')
+def api_top_scores():
+    """Get stocks with best combined scores"""
+    limit = request.args.get('limit', 20, type=int)
+    min_yield = request.args.get('min_yield', 5, type=float)
+    
+    stocks = get_all_stocks()
+    
+    # Filter and add total score
+    scored = []
+    for s in stocks:
+        if s.get('dividend_yield', 0) < min_yield:
+            continue
+        div_score = s.get('dividend_score', 0)
+        cap_score = s.get('capital_score', 0)
+        if div_score and cap_score:
+            s['total_score'] = div_score + cap_score
+            scored.append(s)
+    
+    # Sort by total score, then yield
+    scored.sort(key=lambda x: (x['total_score'], x.get('dividend_yield', 0)), reverse=True)
+    
+    return jsonify(scored[:limit])
 
 
 @app.route('/api/stock/<ticker>')
