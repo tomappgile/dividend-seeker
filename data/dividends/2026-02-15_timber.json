@@ -1,0 +1,34 @@
+{
+  "market": "timber",
+  "scanned_at": "2026-02-15T22:14:42.846164",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "CTO",
+      "name": "CTO Realty Growth, Inc.",
+      "sector": "Real Estate",
+      "industry": "REIT - Diversified",
+      "currency": "USD",
+      "price": 18.93,
+      "dividend_yield": 8.03,
+      "dividend_rate": 1.52,
+      "payout_ratio": 249.18,
+      "pe_ratio": null,
+      "market_cap": 623546816,
+      "market_cap_b": 0.62,
+      "52w_high": 20.54,
+      "52w_low": 15.07,
+      "dist_from_high": 7.8,
+      "max_drawdown_12m": 20.8,
+      "change_6m": 19.9,
+      "change_12m": 0.3,
+      "beta": 0.63,
+      "ex_dividend_date": "2025-12-11",
+      "dividend_score": 1,
+      "capital_score": 4,
+      "sustainable": false,
+      "scanned_at": "2026-02-15T22:14:42.845129"
+    }
+  ]
+}

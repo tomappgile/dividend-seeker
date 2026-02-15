@@ -1,0 +1,34 @@
+{
+  "market": "telecom_global",
+  "scanned_at": "2026-02-15T22:14:48.381920",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "TLK",
+      "name": "PT Telekomunikasi Indonesia, Tb",
+      "sector": "Communication Services",
+      "industry": "Telecom Services",
+      "currency": "USD",
+      "price": 20.91,
+      "dividend_yield": 6.15,
+      "dividend_rate": 1.29,
+      "payout_ratio": 95.32,
+      "pe_ratio": 16.08,
+      "market_cap": 20713908224,
+      "market_cap_b": 20.71,
+      "52w_high": 23.52,
+      "52w_low": 13.15,
+      "dist_from_high": 11.1,
+      "max_drawdown_12m": 19.4,
+      "change_6m": 4.2,
+      "change_12m": 45.1,
+      "beta": 0.04,
+      "ex_dividend_date": "2025-06-12",
+      "dividend_score": 2,
+      "capital_score": 4,
+      "sustainable": true,
+      "scanned_at": "2026-02-15T22:14:48.380717"
+    }
+  ]
+}

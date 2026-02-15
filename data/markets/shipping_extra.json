@@ -1,0 +1,21 @@
+{
+  "name": "Shipping Tankers Extra",
+  "tickers": [
+    "FLNG",
+    "FLEX",
+    "GLOG",
+    "GSL",
+    "HMLP",
+    "KNOP",
+    "LPG",
+    "NVGS",
+    "SB",
+    "SHIP",
+    "TOPS",
+    "TGP",
+    "TK",
+    "TNP",
+    "TRMD",
+    "VLCC"
+  ]
+}
