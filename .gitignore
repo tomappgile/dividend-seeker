@@ -12,4 +12,7 @@ data/logs/
 .vscode/
 .idea/
 *.swp
+
+# Keep DB in repo for Railway
+!data/dividend_seeker.db
 *.db
