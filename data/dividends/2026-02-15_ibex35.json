@@ -1,6 +1,6 @@
 {
   "market": "ibex35",
-  "scanned_at": "2026-02-15T15:59:14.684123",
+  "scanned_at": "2026-02-15T16:06:53.224930",
   "min_yield": 5.0,
   "total_candidates": 10,
   "candidates": [
@@ -22,7 +22,7 @@
       "discount_from_high": 6.38,
       "ex_dividend_date": "2025-11-03",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:13.939490"
+      "scanned_at": "2026-02-15T16:06:52.503778"
     },
     {
       "ticker": "TEF.MC",
@@ -42,7 +42,7 @@
       "discount_from_high": 24.97,
       "ex_dividend_date": "2025-12-16",
       "sustainable": false,
-      "scanned_at": "2026-02-15T15:59:14.530888"
+      "scanned_at": "2026-02-15T16:06:53.155739"
     },
     {
       "ticker": "ENG.MC",
@@ -62,7 +62,7 @@
       "discount_from_high": 0.0,
       "ex_dividend_date": "2025-12-19",
       "sustainable": false,
-      "scanned_at": "2026-02-15T15:59:13.082960"
+      "scanned_at": "2026-02-15T16:06:51.598290"
     },
     {
       "ticker": "SAB.MC",
@@ -82,7 +82,7 @@
       "discount_from_high": 10.3,
       "ex_dividend_date": "2025-12-23",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:14.255352"
+      "scanned_at": "2026-02-15T16:06:52.769687"
     },
     {
       "ticker": "LOG.MC",
@@ -102,7 +102,7 @@
       "discount_from_high": 3.31,
       "ex_dividend_date": "2026-02-24",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:13.548679"
+      "scanned_at": "2026-02-15T16:06:52.140064"
     },
     {
       "ticker": "REP.MC",
@@ -122,7 +122,7 @@
       "discount_from_high": 1.62,
       "ex_dividend_date": "2026-01-12",
       "sustainable": false,
-      "scanned_at": "2026-02-15T15:59:14.151361"
+      "scanned_at": "2026-02-15T16:06:52.613491"
     },
     {
       "ticker": "COL.MC",
@@ -142,7 +142,7 @@
       "discount_from_high": 17.74,
       "ex_dividend_date": "2025-06-17",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:12.783562"
+      "scanned_at": "2026-02-15T16:06:51.421330"
     },
     {
       "ticker": "VIS.MC",
@@ -162,7 +162,7 @@
       "discount_from_high": 16.59,
       "ex_dividend_date": "2025-11-20",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:14.682549"
+      "scanned_at": "2026-02-15T16:06:53.223340"
     },
     {
       "ticker": "UNI.MC",
@@ -182,7 +182,7 @@
       "discount_from_high": 14.1,
       "ex_dividend_date": "2025-09-23",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:14.627848"
+      "scanned_at": "2026-02-15T16:06:53.153755"
     },
     {
       "ticker": "RED.MC",
@@ -202,7 +202,7 @@
       "discount_from_high": 18.09,
       "ex_dividend_date": "2026-01-05",
       "sustainable": true,
-      "scanned_at": "2026-02-15T15:59:14.120595"
+      "scanned_at": "2026-02-15T16:06:52.790986"
     }
   ]
 }

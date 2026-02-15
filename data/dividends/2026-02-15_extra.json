@@ -1,0 +1,105 @@
+{
+  "market": "extra",
+  "scanned_at": "2026-02-15T16:14:39.414760",
+  "candidates": [
+    {
+      "ticker": "AGNC",
+      "name": "AGNC Investment Corp.",
+      "price": 11.36,
+      "currency": "USD",
+      "yield": 12.69,
+      "div_rate": 1.44,
+      "payout": 98.0,
+      "sector": "Real Estate",
+      "verified": true
+    },
+    {
+      "ticker": "NLY",
+      "name": "Annaly Capital Management Inc.",
+      "price": 23.07,
+      "currency": "USD",
+      "yield": 12.14,
+      "div_rate": 2.8,
+      "payout": 95.9,
+      "sector": "Real Estate",
+      "verified": true
+    },
+    {
+      "ticker": "PBR",
+      "name": "Petroleo Brasileiro S.A. Petro",
+      "price": 15.19,
+      "currency": "USD",
+      "yield": 11.06,
+      "div_rate": 1.68,
+      "payout": 84.8,
+      "sector": "Energy",
+      "verified": true
+    },
+    {
+      "ticker": "MPLX",
+      "name": "MPLX LP",
+      "price": 56.83,
+      "currency": "USD",
+      "yield": 7.58,
+      "div_rate": 4.31,
+      "payout": 81.9,
+      "sector": "Energy",
+      "verified": true
+    },
+    {
+      "ticker": "VALE",
+      "name": "VALE S.A.",
+      "price": 16.65,
+      "currency": "USD",
+      "yield": 7.5,
+      "div_rate": 1.25,
+      "payout": 210.5,
+      "sector": "Basic Materials",
+      "verified": true
+    },
+    {
+      "ticker": "ET",
+      "name": "Energy Transfer LP",
+      "price": 18.75,
+      "currency": "USD",
+      "yield": 7.07,
+      "div_rate": 1.33,
+      "payout": 104.4,
+      "sector": "Energy",
+      "verified": true
+    },
+    {
+      "ticker": "EPD",
+      "name": "Enterprise Products Partners L",
+      "price": 37.21,
+      "currency": "USD",
+      "yield": 5.85,
+      "div_rate": 2.18,
+      "payout": 81.2,
+      "sector": "Energy",
+      "verified": true
+    },
+    {
+      "ticker": "BATS.L",
+      "name": "BRITISH AMERICAN TOBACCO PLC O",
+      "price": 4354.0,
+      "currency": "GBp",
+      "yield": 5.63,
+      "div_rate": 2.45,
+      "payout": 68.8,
+      "sector": "Consumer Defensive",
+      "verified": false
+    },
+    {
+      "ticker": "BP.L",
+      "name": "BP PLC $0.25",
+      "price": 461.0,
+      "currency": "GBp",
+      "yield": 5.3,
+      "div_rate": 0.24,
+      "payout": 9514.0,
+      "sector": "Energy",
+      "verified": false
+    }
+  ]
+}
