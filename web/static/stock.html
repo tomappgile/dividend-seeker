@@ -256,6 +256,28 @@
                 '<span class="badge sustainable">✓ Sostenible</span>' : 
                 '<span class="badge risky">⚠ Payout Alto</span>';
             
+            // Asset type badge
+            const assetTypes = {
+                'stock': { icon: '📊', label: 'Acción', color: '#1e40af' },
+                'etf': { icon: '📈', label: 'ETF', color: '#7c3aed' },
+                'reit': { icon: '🏢', label: 'REIT', color: '#059669' },
+                'mreit': { icon: '🏦', label: 'Mortgage REIT', color: '#dc2626' },
+                'bdc': { icon: '💼', label: 'BDC', color: '#d97706' },
+                'cef': { icon: '📦', label: 'CEF', color: '#0891b2' }
+            };
+            const assetType = assetTypes[s.asset_type] || assetTypes['stock'];
+            const assetBadge = `<span class="badge" style="background: ${assetType.color}; color: white;">${assetType.icon} ${assetType.label}</span>`;
+            
+            // Dividend frequency
+            const freqLabels = {
+                'monthly': '🔄 Mensual',
+                'quarterly': '📅 Trimestral',
+                'semi-annual': '📆 Semestral',
+                'annual': '📆 Anual',
+                'unknown': '❓ Desconocida'
+            };
+            const divFreq = freqLabels[s.dividend_frequency] || freqLabels['unknown'];
+            
             const perfColor = (val) => val > 0 ? 'green' : val < 0 ? 'red' : '';
             const perfSign = (val) => val > 0 ? '+' : '';
             
@@ -264,7 +286,8 @@
                     <div class="ticker-name">
                         <h1>${s.ticker}</h1>
                         <div class="name">${s.name || ''}</div>
-                        <div style="margin-top: 10px;">
+                        <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;">
+                            ${assetBadge}
                             ${sustainBadge}
                             <span class="badge" style="background: #1e40af; color: #93c5fd;">${s.sector || 'N/A'}</span>
                             <span class="badge" style="background: #334155;">${s.ocean_market || s.market || 'N/A'}</span>
@@ -280,6 +303,10 @@
                     <div class="card">
                         <div class="card-label">Dividendo Anual</div>
                         <div class="card-value">${s.currency || '€'} ${s.dividend_rate || s.div_rate || 'N/A'}</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Frecuencia Pago</div>
+                        <div class="card-value" style="font-size: 18px;">${divFreq}</div>
                     </div>
                     <div class="card">
                         <div class="card-label">Payout Ratio</div>
@@ -298,28 +325,55 @@
                 <div class="cards">
                     <div class="card">
                         <div class="card-label">📈 Máximo 52 semanas</div>
-                        <div class="card-value">${s.currency || '€'} ${analysis?.week_52_high?.toFixed(2) || 'N/A'}</div>
+                        <div class="card-value">${s.currency || '€'} ${(s['52w_high'] || analysis?.week_52_high)?.toFixed(2) || 'N/A'}</div>
                         <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
                             ${analysis?.week_52_high_date || ''}
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-label">📉 Mínimo 52 semanas</div>
-                        <div class="card-value">${s.currency || '€'} ${analysis?.week_52_low?.toFixed(2) || 'N/A'}</div>
+                        <div class="card-value">${s.currency || '€'} ${(s['52w_low'] || analysis?.week_52_low)?.toFixed(2) || 'N/A'}</div>
                         <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
                             ${analysis?.week_52_low_date || ''}
                         </div>
                     </div>
                     <div class="card">
                         <div class="card-label">Distancia del máximo</div>
-                        <div class="card-value ${analysis?.discount_from_high > 20 ? 'green' : ''}">${analysis?.discount_from_high?.toFixed(1) || 'N/A'}%</div>
+                        <div class="card-value ${(s.dist_from_high || analysis?.discount_from_high) > 20 ? 'green' : ''}">${(s.dist_from_high || analysis?.discount_from_high)?.toFixed(1) || 'N/A'}%</div>
                         <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
-                            ${analysis?.discount_from_high > 20 ? '🔥 Oportunidad' : ''}
+                            ${(s.dist_from_high || analysis?.discount_from_high) > 20 ? '🔥 Oportunidad' : ''}
                         </div>
                     </div>
                     <div class="card">
+                        <div class="card-label">Max Drawdown 12m</div>
+                        <div class="card-value ${s.max_drawdown_12m > 30 ? 'red' : ''}">${s.max_drawdown_12m?.toFixed(1) || 'N/A'}%</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
+                            ${s.max_drawdown_12m > 30 ? '⚠️ Alta volatilidad' : ''}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cards">
+                    <div class="card">
                         <div class="card-label">Próx. Ex-Dividendo</div>
-                        <div class="card-value" style="font-size: 18px;">${analysis?.ex_dividend_date || 'N/A'}</div>
+                        <div class="card-value" style="font-size: 18px;">${s.ex_dividend_date || analysis?.ex_dividend_date || 'N/A'}</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Score Dividendo</div>
+                        <div class="card-value" style="font-size: 18px;">${'⭐'.repeat(s.dividend_score || 0) || 'N/A'}</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">Sostenibilidad del pago</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Score Capital</div>
+                        <div class="card-value" style="font-size: 18px;">${'⭐'.repeat(s.capital_score || 0) || 'N/A'}</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">Estabilidad del precio</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-label">Beta</div>
+                        <div class="card-value">${s.beta?.toFixed(2) || 'N/A'}</div>
+                        <div style="color: var(--muted); font-size: 12px; margin-top: 5px;">
+                            ${s.beta < 1 ? '📉 Menos volátil que mercado' : s.beta > 1 ? '📈 Más volátil que mercado' : ''}
+                        </div>
                     </div>
                 </div>
                 
