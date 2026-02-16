@@ -199,6 +199,15 @@
             <select id="filterMarket">
                 <option value="">Todos los mercados</option>
             </select>
+            <select id="filterAssetType">
+                <option value="">Tipo: Todos</option>
+                <option value="stock">📊 Solo Acciones</option>
+                <option value="reit">🏢 REITs</option>
+                <option value="mreit">🏦 Mortgage REITs</option>
+                <option value="etf">📈 ETFs</option>
+                <option value="bdc">💼 BDCs</option>
+                <option value="cef">📦 CEFs</option>
+            </select>
             <select id="filterYield">
                 <option value="5">Yield ≥ 5%</option>
                 <option value="6">Yield ≥ 6%</option>
@@ -224,6 +233,9 @@
                 <option value="dividend_score">Ordenar: Div Score</option>
                 <option value="capital_score">Ordenar: Cap Score</option>
             </select>
+            <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                <input type="checkbox" id="stocksOnly"> Solo acciones
+            </label>
             <button onclick="loadStocks()">Filtrar</button>
         </div>
         
@@ -234,8 +246,9 @@
                     <th>Nombre</th>
                     <th>Mercado</th>
                     <th>Yield</th>
+                    <th>Freq</th>
+                    <th>52W</th>
                     <th>12M</th>
-                    <th>MaxDD</th>
                     <th>Div</th>
                     <th>Cap</th>
                     <th>Total</th>
@@ -298,15 +311,41 @@
             return 'var(--danger)';
         }
         
+        function assetTypeIcon(type) {
+            const icons = {
+                'stock': '📊',
+                'reit': '🏢',
+                'mreit': '🏦',
+                'etf': '📈',
+                'bdc': '💼',
+                'cef': '📦'
+            };
+            return icons[type] || '📊';
+        }
+        
+        function freqLabel(freq) {
+            const labels = {
+                'monthly': 'M',
+                'quarterly': 'Q',
+                'semi-annual': 'S',
+                'annual': 'A'
+            };
+            return labels[freq] || '?';
+        }
+        
         async function loadStocks() {
             const market = document.getElementById('filterMarket').value;
             const minYield = document.getElementById('filterYield').value;
             const minDivScore = document.getElementById('filterDivScore').value;
             const minCapScore = document.getElementById('filterCapScore').value;
             const sortBy = document.getElementById('sortBy').value;
+            const assetType = document.getElementById('filterAssetType').value;
+            const stocksOnly = document.getElementById('stocksOnly').checked;
             
             let url = `${API}/api/stocks?min_yield=${minYield}&min_div_score=${minDivScore}&min_cap_score=${minCapScore}&sort=${sortBy}`;
             if (market) url += `&market=${encodeURIComponent(market)}`;
+            if (assetType) url += `&asset_type=${assetType}`;
+            if (stocksOnly) url += `&stocks_only=true`;
             
             const res = await fetch(url);
             const stocks = await res.json();
@@ -321,17 +360,21 @@
                 const capScore = s.capital_score || 0;
                 const totalScore = divScore + capScore;
                 const maxDD = s.max_drawdown_12m || 0;
+                const typeIcon = assetTypeIcon(s.asset_type);
+                const freq = freqLabel(s.dividend_frequency);
+                const w52 = s['52w_high'] && s['52w_low'] ? `${s['52w_low'].toFixed(1)}-${s['52w_high'].toFixed(1)}` : '-';
                 
                 return `
                     <tr onclick="window.location.href='/stock.html?t=${s.ticker}'" style="cursor: pointer;">
-                        <td class="ticker">${s.ticker}</td>
-                        <td>${(s.name || '-').substring(0, 20)}</td>
-                        <td>${s.ocean_market || s.market || '-'}</td>
+                        <td class="ticker">${typeIcon} ${s.ticker}</td>
+                        <td>${(s.name || '-').substring(0, 18)}</td>
+                        <td style="font-size: 11px;">${s.ocean_market || s.market || '-'}</td>
                         <td class="yield ${yieldClass}">${s.dividend_yield?.toFixed(1)}%</td>
-                        <td class="trend ${trendClass}">${trendIcon} ${Math.abs(change12m).toFixed(0)}%</td>
-                        <td style="color: ${maxDD > 25 ? 'var(--danger)' : 'var(--muted)'}">${maxDD.toFixed(0)}%</td>
-                        <td style="color: ${scoreColor(divScore)}">${stars(divScore)}</td>
-                        <td style="color: ${scoreColor(capScore)}">${stars(capScore)}</td>
+                        <td style="font-size: 11px; color: var(--muted);" title="${s.dividend_frequency || 'unknown'}">${freq}</td>
+                        <td style="font-size: 10px; color: var(--muted);">${w52}</td>
+                        <td class="trend ${trendClass}">${trendIcon}${Math.abs(change12m).toFixed(0)}%</td>
+                        <td style="color: ${scoreColor(divScore)}; font-size: 12px;">${stars(divScore)}</td>
+                        <td style="color: ${scoreColor(capScore)}; font-size: 12px;">${stars(capScore)}</td>
                         <td style="font-weight: bold; color: ${scoreColor(totalScore/2)}">${totalScore}/10</td>
                     </tr>
                 `;

@@ -91,6 +91,8 @@ def api_stocks():
     sustainable_only = request.args.get('sustainable', 'false') == 'true'
     min_div_score = request.args.get('min_div_score', 0, type=int)
     min_cap_score = request.args.get('min_cap_score', 0, type=int)
+    asset_type = request.args.get('asset_type', None)  # stock, etf, reit, mreit, bdc, cef
+    stocks_only = request.args.get('stocks_only', 'false') == 'true'  # Exclude ETFs/funds
     sort_by = request.args.get('sort', 'yield')  # yield, score, dividend_score, capital_score
     limit = request.args.get('limit', 100, type=int)
     
@@ -101,13 +103,22 @@ def api_stocks():
     for s in stocks:
         if s.get('dividend_yield', 0) < min_yield:
             continue
-        if market and market not in s.get('ocean_market', ''):
-            continue
+        # Market filter - check both ocean_market and market fields
+        if market:
+            stock_market = s.get('ocean_market', '') or s.get('market', '')
+            if market.lower() not in stock_market.lower():
+                continue
         if sustainable_only and not s.get('sustainable', True):
             continue
         if s.get('dividend_score', 0) < min_div_score:
             continue
         if s.get('capital_score', 0) < min_cap_score:
+            continue
+        # Asset type filter
+        if asset_type and s.get('asset_type', 'stock') != asset_type:
+            continue
+        # Stocks only - exclude ETFs, CEFs, and other funds
+        if stocks_only and s.get('asset_type', 'stock') in ['etf', 'cef']:
             continue
         filtered.append(s)
     

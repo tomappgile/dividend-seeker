@@ -182,6 +182,69 @@ def get_price_metrics(stock) -> dict:
     return metrics
 
 
+def get_dividend_frequency(stock) -> str:
+    """Determine dividend payment frequency from history."""
+    try:
+        divs = stock.dividends
+        if len(divs) < 2:
+            return "unknown"
+        
+        # Count payments in last 18 months for better accuracy
+        # Use timezone-aware comparison
+        cutoff = pd.Timestamp.now(tz='UTC') - pd.DateOffset(months=18)
+        try:
+            recent = divs[divs.index >= cutoff]
+        except:
+            # Fallback: just use last N dividends
+            recent = divs.tail(6)
+        
+        count = len(recent)
+        
+        # Adjust for 18-month window
+        if count >= 15:
+            return "monthly"
+        elif count >= 5:
+            return "quarterly"
+        elif count >= 2:
+            return "semi-annual"
+        elif count >= 1:
+            return "annual"
+        else:
+            return "unknown"
+    except:
+        return "unknown"
+
+
+def get_asset_type(info: dict, ticker: str) -> str:
+    """Determine asset type from quote type and name."""
+    quote_type = info.get("quoteType", "").upper()
+    name = (info.get("shortName") or "").upper()
+    sector = info.get("sector", "")
+    
+    if quote_type == "ETF":
+        return "etf"
+    
+    # Check for specific fund types
+    if any(x in name for x in ["FUND", "ETF", "TRUST", "INDEX"]):
+        return "etf"
+    
+    # REITs
+    if "REIT" in name or sector == "Real Estate":
+        if any(x in name for x in ["MORTGAGE", "MREITS"]) or ticker in ["NLY", "AGNC", "STWD", "BXMT"]:
+            return "mreit"
+        return "reit"
+    
+    # BDCs
+    if any(x in name for x in ["BDC", "CAPITAL CORP", "INVESTMENT CORP"]):
+        return "bdc"
+    
+    # CEFs (Closed-End Funds)
+    if any(x in name for x in ["PIMCO", "CLOSED", "CEF"]):
+        return "cef"
+    
+    return "stock"
+
+
 def get_stock_data(ticker: str) -> dict | None:
     """Fetch dividend and price data for a stock."""
     try:
@@ -232,15 +295,21 @@ def get_stock_data(ticker: str) -> dict | None:
         dividend_score = calc_dividend_score(payout_ratio, dividend_yield_pct)
         capital_score = calc_capital_score(dist_from_high, max_drawdown_12m, change_12m, beta)
         
+        # Get asset type and dividend frequency
+        asset_type = get_asset_type(info, ticker)
+        div_frequency = get_dividend_frequency(stock)
+        
         return {
             "ticker": ticker,
             "name": name,
+            "asset_type": asset_type,  # stock, etf, reit, mreit, bdc, cef
             "sector": sector,
             "industry": industry,
             "currency": currency,
             "price": round(current_price, 2),
             "dividend_yield": round(dividend_yield_pct, 2),
             "dividend_rate": round(dividend_rate, 2),
+            "dividend_frequency": div_frequency,  # monthly, quarterly, semi-annual, annual
             "payout_ratio": round(payout_ratio, 2),
             "pe_ratio": round(pe_ratio, 2) if pe_ratio else None,
             "market_cap": market_cap,
