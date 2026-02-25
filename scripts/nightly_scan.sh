@@ -27,5 +27,25 @@ echo ""
 echo "💾 Syncing to database..."
 python scripts/sync_db.py
 
+# Smart analysis - only new/changes/urgent
+echo ""
+echo "🧠 Running smart analysis..."
+python scripts/smart_scan.py
+
+# Check if there's a message to send
+MSG_FILE="$PROJECT_DIR/data/candidates/telegram_message.txt"
+if [ -f "$MSG_FILE" ] && [ -s "$MSG_FILE" ]; then
+    echo ""
+    echo "📨 Message ready for Telegram:"
+    cat "$MSG_FILE"
+    echo ""
+    echo "---"
+    echo "SMART_ALERT_READY"  # Signal to cron agent
+else
+    echo ""
+    echo "📭 No new alerts to send"
+    echo "NO_NEW_ALERTS"  # Signal to cron agent
+fi
+
 echo ""
 echo "✅ Nightly scan complete at $(date)"
