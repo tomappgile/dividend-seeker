@@ -1,0 +1,36 @@
+{
+  "market": "food_agri",
+  "scanned_at": "2026-02-26T09:06:39.536937",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "VIS.MC",
+      "name": "VISCOFAN, S.A.",
+      "asset_type": "stock",
+      "sector": "Consumer Cyclical",
+      "industry": "Packaging & Containers",
+      "currency": "EUR",
+      "price": 58.6,
+      "dividend_yield": 5.41,
+      "dividend_rate": 3.17,
+      "dividend_frequency": "semi-annual",
+      "payout_ratio": 89.73,
+      "pe_ratio": 16.84,
+      "market_cap": 2685820416,
+      "market_cap_b": 2.69,
+      "52w_high": 68.7,
+      "52w_low": 48.35,
+      "dist_from_high": 14.7,
+      "max_drawdown_12m": 22.3,
+      "change_6m": 0.6,
+      "change_12m": 2.7,
+      "beta": 0.16,
+      "ex_dividend_date": "2025-11-20",
+      "dividend_score": 2,
+      "capital_score": 3,
+      "sustainable": true,
+      "scanned_at": "2026-02-26T09:06:39.536522"
+    }
+  ]
+}

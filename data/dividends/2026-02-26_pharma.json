@@ -1,0 +1,36 @@
+{
+  "market": "pharma",
+  "scanned_at": "2026-02-26T09:06:37.413565",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "PFE",
+      "name": "Pfizer, Inc.",
+      "asset_type": "stock",
+      "sector": "Healthcare",
+      "industry": "Drug Manufacturers - General",
+      "currency": "USD",
+      "price": 27.09,
+      "dividend_yield": 6.35,
+      "dividend_rate": 1.72,
+      "dividend_frequency": "quarterly",
+      "payout_ratio": 126.47,
+      "pe_ratio": 19.92,
+      "market_cap": 154025820160,
+      "market_cap_b": 154.03,
+      "52w_high": 27.94,
+      "52w_low": 20.92,
+      "dist_from_high": 3.0,
+      "max_drawdown_12m": 19.2,
+      "change_6m": 12.5,
+      "change_12m": 10.0,
+      "beta": 0.44,
+      "ex_dividend_date": "2026-01-23",
+      "dividend_score": 1,
+      "capital_score": 4,
+      "sustainable": false,
+      "scanned_at": "2026-02-26T09:06:37.089222"
+    }
+  ]
+}

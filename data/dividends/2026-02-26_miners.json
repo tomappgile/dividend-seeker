@@ -1,0 +1,36 @@
+{
+  "market": "miners",
+  "scanned_at": "2026-02-26T09:07:04.718086",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "VALE",
+      "name": "VALE S.A.",
+      "asset_type": "stock",
+      "sector": "Basic Materials",
+      "industry": "Other Industrial Metals & Mining",
+      "currency": "USD",
+      "price": 17.53,
+      "dividend_yield": 7.12,
+      "dividend_rate": 1.25,
+      "dividend_frequency": "semi-annual",
+      "payout_ratio": 210.54,
+      "pe_ratio": 31.87,
+      "market_cap": 74831716352,
+      "market_cap_b": 74.83,
+      "52w_high": 17.72,
+      "52w_low": 8.06,
+      "dist_from_high": 1.1,
+      "max_drawdown_12m": 18.9,
+      "change_6m": 80.6,
+      "change_12m": 103.3,
+      "beta": 0.94,
+      "ex_dividend_date": "2025-12-12",
+      "dividend_score": 1,
+      "capital_score": 4,
+      "sustainable": false,
+      "scanned_at": "2026-02-26T09:07:04.220231"
+    }
+  ]
+}

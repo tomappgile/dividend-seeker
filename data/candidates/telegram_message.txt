@@ -1,8 +1,12 @@
 🔔 <b>Dividend Seeker - 26 Feb 2026</b>
 
 🚨 <b>URGENTE (Yield > 6.5%)</b>
-  🔥 <b>NTGY.MC</b> | 9.3% | Utilities
-  ⚠️ <b>TEF.MC</b> | 8.2% | Communication S
-  ⚠️ <b>ENG.MC</b> | 6.6% | Utilities
+  ⚠️ <b>TCPC</b> | 21.7% | Financial Servi
+  ⚠️ <b>FSK</b> | 21.0% | Financial Servi
+  ⚠️ <b>HRZN</b> | 20.9% | Financial Servi
+  ⚠️ <b>PSEC</b> | 19.4% | Financial Servi
+  ⚠️ <b>TPVG</b> | 19.3% | Financial Servi
 
-📊 <i>Total alertas: 3</i>
+🆕 <b>Nuevos candidatos (>5%)</b>
+
+📊 <i>Total alertas: 34</i>

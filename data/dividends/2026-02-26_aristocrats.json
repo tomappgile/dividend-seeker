@@ -1,0 +1,36 @@
+{
+  "market": "aristocrats",
+  "scanned_at": "2026-02-26T09:06:46.353732",
+  "min_yield": 5.0,
+  "total_candidates": 1,
+  "candidates": [
+    {
+      "ticker": "TROW",
+      "name": "T. Rowe Price Group, Inc.",
+      "asset_type": "stock",
+      "sector": "Financial Services",
+      "industry": "Asset Management",
+      "currency": "USD",
+      "price": 95.27,
+      "dividend_yield": 5.46,
+      "dividend_rate": 5.2,
+      "dividend_frequency": "quarterly",
+      "payout_ratio": 54.98,
+      "pe_ratio": 10.31,
+      "market_cap": 20791437312,
+      "market_cap_b": 20.79,
+      "52w_high": 118.22,
+      "52w_low": 77.85,
+      "dist_from_high": 19.4,
+      "max_drawdown_12m": 23.0,
+      "change_6m": -10.1,
+      "change_12m": -4.2,
+      "beta": 1.54,
+      "ex_dividend_date": "2026-03-16",
+      "dividend_score": 4,
+      "capital_score": 2,
+      "sustainable": true,
+      "scanned_at": "2026-02-26T09:06:46.352593"
+    }
+  ]
+}

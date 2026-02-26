@@ -130,22 +130,30 @@ def log_scan(conn, scan_date: str, total: int, source: str):
 
 def sync_from_json(json_path: Path = MAIN_LIST):
     """Sync database from JSON scan results."""
-    if not json_path.exists():
+    # Try top_picks.json first (most recent), then MAIN_LIST
+    top_picks = DATA_DIR / "candidates" / "top_picks.json"
+    if top_picks.exists():
+        json_path = top_picks
+    elif not json_path.exists():
         print(f"❌ JSON file not found: {json_path}")
         return False
     
     with open(json_path) as f:
         data = json.load(f)
     
-    scan_date = data.get('scan_date', datetime.now().strftime('%Y-%m-%d'))
+    # Use today's date for the snapshot
+    scan_date = datetime.now().strftime('%Y-%m-%d')
     
     conn = get_connection()
     
     total = 0
     tiers = ['tier1_high_sustainable', 'tier2_moderate_sustainable', 'tier3_high_risk']
     
-    # Also handle flat list format
-    if 'candidates' in data:
+    # Handle different JSON formats
+    if 'top_20' in data:
+        # top_picks.json format
+        stocks = data['top_20']
+    elif 'candidates' in data:
         stocks = data['candidates']
     else:
         stocks = []
@@ -216,11 +224,64 @@ def show_stats():
         print(f"   {row['ticker']:<10} {row['dividend_yield']:.1f}% {div_s} {cap_s}")
 
 
+def sync_from_daily_files(date_str: str = None):
+    """Sync from all daily market scan files."""
+    if date_str is None:
+        date_str = datetime.now().strftime('%Y-%m-%d')
+    
+    dividends_dir = DATA_DIR / "dividends"
+    pattern = f"{date_str}_*.json"
+    
+    files = list(dividends_dir.glob(pattern))
+    if not files:
+        print(f"❌ No scan files found for {date_str}")
+        return False
+    
+    print(f"📊 Found {len(files)} scan files for {date_str}")
+    
+    conn = get_connection()
+    total = 0
+    seen_tickers = set()
+    
+    for file_path in files:
+        market = file_path.stem.replace(f"{date_str}_", "")
+        with open(file_path) as f:
+            data = json.load(f)
+        
+        stocks = data.get('candidates', [])
+        for stock in stocks:
+            ticker = stock['ticker']
+            if ticker in seen_tickers:
+                continue
+            seen_tickers.add(ticker)
+            
+            try:
+                sync_stock(conn, stock, market)
+                sync_snapshot(conn, stock, date_str)
+                sync_dividend(conn, stock)
+                total += 1
+            except Exception as e:
+                print(f"  ⚠️  {ticker}: {e}")
+    
+    conn.commit()
+    conn.close()
+    
+    print(f"✅ Synced {total} stocks from daily files to {DB_PATH.name}")
+    print(f"   📅 Scan date: {date_str}")
+    
+    return True
+
+
 if __name__ == "__main__":
     import sys
     
     if len(sys.argv) > 1 and sys.argv[1] == "--stats":
         show_stats()
+    elif len(sys.argv) > 1 and sys.argv[1] == "--daily":
+        date_arg = sys.argv[2] if len(sys.argv) > 2 else None
+        sync_from_daily_files(date_arg)
+        show_stats()
     else:
-        sync_from_json()
+        # Default: sync from daily files first, then top_picks
+        sync_from_daily_files()
         show_stats()
