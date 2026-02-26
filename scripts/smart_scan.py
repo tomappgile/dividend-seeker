@@ -139,10 +139,21 @@ def analyze_candidates(current_candidates: list[dict]) -> dict:
                 candidate['_yield_change'] = yield_change
                 results['increase'].append(candidate)
         
-        # URGENT: >6.5% (only if not already in 'new')
+        # URGENT: >6.5% - only notify if:
+        # 1. Not recently notified (within 7 days), OR
+        # 2. Yield increased by >0.5% since last notification
         if is_urgent and candidate not in results['new']:
-            # Only notify urgent if not recently notified
+            should_notify_urgent = False
+            
             if ticker not in recent_notifications:
+                # Never notified as urgent, or more than 7 days ago
+                should_notify_urgent = True
+            elif yield_change >= YIELD_CHANGE_THRESHOLD:
+                # Already notified, but yield went UP significantly
+                should_notify_urgent = True
+                candidate['_yield_change'] = yield_change
+            
+            if should_notify_urgent:
                 candidate['_notification_type'] = 'urgent'
                 candidate['_prev_yield'] = prev_yield
                 if candidate not in results['urgent']:
@@ -252,6 +263,10 @@ def main():
             mark_as_notified(c['ticker'], 0, c['dividend_yield'], 'new')
         for c in analysis['increase']:
             mark_as_notified(c['ticker'], c.get('_prev_yield', 0), c['dividend_yield'], 'increase')
+        for c in analysis['urgent']:
+            # Only mark if not already marked as new (avoid duplicates)
+            if c not in analysis['new']:
+                mark_as_notified(c['ticker'], c.get('_prev_yield', 0), c['dividend_yield'], 'urgent')
         
         # Save message for nightly_scan.sh to send
         msg_file = DATA_DIR / "candidates" / "telegram_message.txt"
