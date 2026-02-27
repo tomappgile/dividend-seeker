@@ -1,8 +1,8 @@
 {
   "market": "ibex35",
-  "scanned_at": "2026-02-27T03:00:42.988517",
+  "scanned_at": "2026-02-27T09:12:55.147915",
   "min_yield": 5.0,
-  "total_candidates": 10,
+  "total_candidates": 11,
   "candidates": [
     {
       "ticker": "NTGY.MC",
@@ -12,11 +12,11 @@
       "industry": "Utilities - Regulated Gas",
       "currency": "EUR",
       "price": 26.06,
-      "dividend_yield": 9.22,
+      "dividend_yield": 9.21,
       "dividend_rate": 2.4,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 72.54,
-      "pe_ratio": 11.79,
+      "pe_ratio": 11.85,
       "market_cap": 25030461440,
       "market_cap_b": 25.03,
       "52w_high": 27.9,
@@ -24,13 +24,13 @@
       "dist_from_high": 6.6,
       "max_drawdown_12m": 11.3,
       "change_6m": -1.8,
-      "change_12m": 10.4,
+      "change_12m": 11.0,
       "beta": 0.48,
       "ex_dividend_date": "2025-11-03",
       "dividend_score": 3,
       "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-27T03:00:41.733034"
+      "scanned_at": "2026-02-27T09:12:53.815385"
     },
     {
       "ticker": "TEF.MC",
@@ -40,7 +40,7 @@
       "industry": "Telecom Services",
       "currency": "EUR",
       "price": 3.65,
-      "dividend_yield": 8.14,
+      "dividend_yield": 8.22,
       "dividend_rate": 0.3,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 111.11,
@@ -52,13 +52,13 @@
       "dist_from_high": 25.4,
       "max_drawdown_12m": 30.9,
       "change_6m": -16.7,
-      "change_12m": -9.1,
+      "change_12m": -9.0,
       "beta": 0.28,
       "ex_dividend_date": "2026-06-16",
       "dividend_score": 1,
       "capital_score": 2,
       "sustainable": false,
-      "scanned_at": "2026-02-27T03:00:42.860396"
+      "scanned_at": "2026-02-27T09:12:54.723234"
     },
     {
       "ticker": "ENG.MC",
@@ -68,7 +68,7 @@
       "industry": "Utilities - Regulated Gas",
       "currency": "EUR",
       "price": 15.1,
-      "dividend_yield": 6.59,
+      "dividend_yield": 6.62,
       "dividend_rate": 1.0,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 191.09,
@@ -80,13 +80,13 @@
       "dist_from_high": 1.7,
       "max_drawdown_12m": 10.2,
       "change_6m": 16.2,
-      "change_12m": 23.1,
+      "change_12m": 22.1,
       "beta": 0.41,
       "ex_dividend_date": "2026-06-30",
       "dividend_score": 1,
       "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-27T03:00:40.226875"
+      "scanned_at": "2026-02-27T09:12:52.445299"
     },
     {
       "ticker": "LOG.MC",
@@ -96,7 +96,7 @@
       "industry": "Integrated Freight & Logistics",
       "currency": "EUR",
       "price": 32.0,
-      "dividend_yield": 6.27,
+      "dividend_yield": 6.28,
       "dividend_rate": 2.01,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 100.05,
@@ -108,13 +108,13 @@
       "dist_from_high": 7.2,
       "max_drawdown_12m": 12.7,
       "change_6m": 19.5,
-      "change_12m": 21.7,
+      "change_12m": 22.8,
       "beta": 0.49,
       "ex_dividend_date": "2026-02-24",
       "dividend_score": 1,
       "capital_score": 4,
       "sustainable": false,
-      "scanned_at": "2026-02-27T03:00:40.914745"
+      "scanned_at": "2026-02-27T09:12:53.122474"
     },
     {
       "ticker": "SAB.MC",
@@ -124,7 +124,7 @@
       "industry": "Banks - Diversified",
       "currency": "EUR",
       "price": 3.28,
-      "dividend_yield": 6.22,
+      "dividend_yield": 6.23,
       "dividend_rate": 0.2,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 82.63,
@@ -136,13 +136,13 @@
       "dist_from_high": 5.9,
       "max_drawdown_12m": 18.7,
       "change_6m": 2.6,
-      "change_12m": 34.9,
+      "change_12m": 34.3,
       "beta": 0.58,
       "ex_dividend_date": "2025-12-23",
       "dividend_score": 3,
       "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-27T03:00:42.121108"
+      "scanned_at": "2026-02-27T09:12:54.322007"
     },
     {
       "ticker": "REP.MC",
@@ -152,7 +152,7 @@
       "industry": "Oil & Gas Integrated",
       "currency": "EUR",
       "price": 18.98,
-      "dividend_yield": 5.85,
+      "dividend_yield": 5.81,
       "dividend_rate": 1.1,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 102.63,
@@ -164,13 +164,13 @@
       "dist_from_high": 0.1,
       "max_drawdown_12m": 23.5,
       "change_6m": 40.4,
-      "change_12m": 64.1,
+      "change_12m": 65.6,
       "beta": 0.15,
       "ex_dividend_date": "2026-07-06",
       "dividend_score": 1,
       "capital_score": 5,
       "sustainable": false,
-      "scanned_at": "2026-02-27T03:00:42.140167"
+      "scanned_at": "2026-02-27T09:12:53.916031"
     },
     {
       "ticker": "COL.MC",
@@ -180,7 +180,7 @@
       "industry": "REIT - Office",
       "currency": "EUR",
       "price": 5.51,
-      "dividend_yield": 5.5,
+      "dividend_yield": 5.44,
       "dividend_rate": 0.3,
       "dividend_frequency": "annual",
       "payout_ratio": 41.49,
@@ -192,13 +192,13 @@
       "dist_from_high": 13.0,
       "max_drawdown_12m": 17.3,
       "change_6m": -3.2,
-      "change_12m": 2.7,
+      "change_12m": 2.6,
       "beta": 1.27,
       "ex_dividend_date": "2025-06-17",
       "dividend_score": 5,
       "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-27T03:00:39.888247"
+      "scanned_at": "2026-02-27T09:12:52.094890"
     },
     {
       "ticker": "VIS.MC",
@@ -208,7 +208,7 @@
       "industry": "Packaging & Containers",
       "currency": "EUR",
       "price": 58.7,
-      "dividend_yield": 5.41,
+      "dividend_yield": 5.4,
       "dividend_rate": 3.17,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 89.73,
@@ -220,13 +220,41 @@
       "dist_from_high": 14.6,
       "max_drawdown_12m": 22.3,
       "change_6m": 1.2,
-      "change_12m": 2.9,
+      "change_12m": 3.4,
       "beta": 0.16,
       "ex_dividend_date": "2025-11-20",
       "dividend_score": 2,
       "capital_score": 3,
       "sustainable": true,
-      "scanned_at": "2026-02-27T03:00:42.988089"
+      "scanned_at": "2026-02-27T09:12:55.147441"
+    },
+    {
+      "ticker": "RED.MC",
+      "name": "REDEIA CORPORACION, S.A.",
+      "asset_type": "stock",
+      "sector": "Utilities",
+      "industry": "Utilities - Regulated Electric",
+      "currency": "EUR",
+      "price": 15.44,
+      "dividend_yield": 5.18,
+      "dividend_rate": 0.8,
+      "dividend_frequency": "semi-annual",
+      "payout_ratio": 85.47,
+      "pe_ratio": 16.43,
+      "market_cap": 8343900160,
+      "market_cap_b": 8.34,
+      "52w_high": 19.51,
+      "52w_low": 14.15,
+      "dist_from_high": 20.9,
+      "max_drawdown_12m": 22.1,
+      "change_6m": -6.0,
+      "change_12m": -5.7,
+      "beta": 0.44,
+      "ex_dividend_date": "2026-01-05",
+      "dividend_score": 2,
+      "capital_score": 3,
+      "sustainable": true,
+      "scanned_at": "2026-02-27T09:12:53.854432"
     },
     {
       "ticker": "UNI.MC",
@@ -236,7 +264,7 @@
       "industry": "Banks - Regional",
       "currency": "EUR",
       "price": 2.73,
-      "dividend_yield": 5.14,
+      "dividend_yield": 5.12,
       "dividend_rate": 0.14,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 56.83,
@@ -248,13 +276,13 @@
       "dist_from_high": 10.1,
       "max_drawdown_12m": 19.9,
       "change_6m": 18.0,
-      "change_12m": 81.7,
+      "change_12m": 74.6,
       "beta": 1.0,
       "ex_dividend_date": "2025-09-23",
       "dividend_score": 4,
       "capital_score": 4,
       "sustainable": true,
-      "scanned_at": "2026-02-27T03:00:42.536510"
+      "scanned_at": "2026-02-27T09:12:54.831895"
     },
     {
       "ticker": "BKT.MC",
@@ -264,7 +292,7 @@
       "industry": "Banks - Regional",
       "currency": "EUR",
       "price": 14.4,
-      "dividend_yield": 5.05,
+      "dividend_yield": 5.07,
       "dividend_rate": 0.73,
       "dividend_frequency": "semi-annual",
       "payout_ratio": 49.14,
@@ -276,13 +304,13 @@
       "dist_from_high": 4.0,
       "max_drawdown_12m": 20.6,
       "change_6m": 15.0,
-      "change_12m": 63.0,
+      "change_12m": 61.7,
       "beta": -0.07,
       "ex_dividend_date": "2026-03-30",
       "dividend_score": 5,
       "capital_score": 5,
       "sustainable": true,
-      "scanned_at": "2026-02-27T03:00:39.867868"
+      "scanned_at": "2026-02-27T09:12:52.129846"
     }
   ]
 }
