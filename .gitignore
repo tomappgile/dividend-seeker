@@ -13,7 +13,6 @@ data/logs/
 .idea/
 *.swp
 
-# Keep DB in repo for Railway
-!data/dividend_seeker.db
+# Ignore temp DBs but keep main one for Railway
 *.db
-data/dividend_seeker.db
+!data/dividend_seeker.db
