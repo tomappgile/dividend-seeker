@@ -80,3 +80,4 @@ This tool provides **information for educational purposes only** — not financi
 ---
 
 *Project inception: January 10, 2026*
+# Force rebuild Fri Feb 27 19:18:07 CET 2026
