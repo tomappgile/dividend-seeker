@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 from datetime import datetime
 import os
+import requests
 
 app = Flask(__name__, static_folder='static')
 CORS(app)
@@ -18,14 +19,41 @@ CORS(app)
 BASE_DIR = Path(__file__).parent.parent
 DATA_PATH = BASE_DIR / 'data'
 
+# GitHub raw URL for fresh data
+GITHUB_DATA_URL = "https://raw.githubusercontent.com/tomappgile/dividend-seeker/main/data/candidates/MAIN_LIST.json"
+
+# Cache for GitHub data (refresh every 5 minutes)
+_cache = {'data': None, 'timestamp': None}
+CACHE_TTL = 300  # 5 minutes
+
 
 def load_candidates():
-    """Load candidates from JSON file"""
+    """Load candidates from GitHub (with cache) or fallback to local file"""
+    import time
+    
+    # Check cache
+    if _cache['data'] and _cache['timestamp']:
+        if time.time() - _cache['timestamp'] < CACHE_TTL:
+            return _cache['data']
+    
+    # Try GitHub first
+    try:
+        response = requests.get(GITHUB_DATA_URL, timeout=10)
+        if response.status_code == 200:
+            data = response.json()
+            _cache['data'] = data
+            _cache['timestamp'] = time.time()
+            return data
+    except Exception as e:
+        print(f"GitHub fetch failed: {e}")
+    
+    # Fallback to local file
     main_list = DATA_PATH / 'candidates' / 'MAIN_LIST.json'
     if main_list.exists():
         with open(main_list) as f:
             return json.load(f)
-    return {'tier1_high_sustainable': [], 'tier2_moderate_sustainable': [], 'tier3_high_risk': []}
+    
+    return {'stocks': [], 'scan_date': 'N/A'}
 
 
 def get_all_stocks():
