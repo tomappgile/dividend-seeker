@@ -55,6 +55,35 @@ def stock_page():
     return send_from_directory('static', 'stock.html')
 
 
+@app.route('/api/debug')
+def api_debug():
+    """Debug endpoint to check file paths"""
+    import os
+    main_list = DATA_PATH / 'candidates' / 'MAIN_LIST.json'
+    
+    info = {
+        'base_dir': str(BASE_DIR),
+        'data_path': str(DATA_PATH),
+        'main_list_path': str(main_list),
+        'main_list_exists': main_list.exists(),
+        'cwd': os.getcwd(),
+        'files_in_candidates': []
+    }
+    
+    candidates_dir = DATA_PATH / 'candidates'
+    if candidates_dir.exists():
+        info['files_in_candidates'] = os.listdir(candidates_dir)
+    
+    if main_list.exists():
+        with open(main_list) as f:
+            data = json.load(f)
+        info['scan_date'] = data.get('scan_date', 'N/A')
+        info['total_stocks'] = data.get('total', len(data.get('stocks', [])))
+        info['first_ticker'] = data.get('stocks', [{}])[0].get('ticker', 'N/A') if data.get('stocks') else 'N/A'
+    
+    return jsonify(info)
+
+
 @app.route('/api/stats')
 def api_stats():
     """Dashboard stats"""
