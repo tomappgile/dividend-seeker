@@ -295,6 +295,31 @@ def get_stock_data(ticker: str) -> dict | None:
         dividend_score = calc_dividend_score(payout_ratio, dividend_yield_pct)
         capital_score = calc_capital_score(dist_from_high, max_drawdown_12m, change_12m, beta)
         
+        # Analyst consensus data
+        price_target_avg = info.get("targetMeanPrice") or info.get("targetMedianPrice")
+        price_target_high = info.get("targetHighPrice")
+        price_target_low = info.get("targetLowPrice")
+        analyst_count = info.get("numberOfAnalystOpinions", 0) or 0
+        
+        # Calculate upside potential
+        upside_potential = None
+        if price_target_avg and current_price and current_price > 0:
+            upside_potential = round(((price_target_avg - current_price) / current_price) * 100, 1)
+        
+        # Analyst rating (recommendationKey: buy, hold, sell, etc.)
+        analyst_rating = info.get("recommendationKey", "").upper() or None
+        # Normalize ratings
+        if analyst_rating:
+            rating_map = {
+                "STRONG_BUY": "Strong Buy",
+                "BUY": "Buy", 
+                "HOLD": "Hold",
+                "UNDERPERFORM": "Sell",
+                "SELL": "Sell",
+                "STRONG_SELL": "Strong Sell"
+            }
+            analyst_rating = rating_map.get(analyst_rating, analyst_rating.title())
+        
         # Get asset type and dividend frequency
         asset_type = get_asset_type(info, ticker)
         div_frequency = get_dividend_frequency(stock)
@@ -325,6 +350,13 @@ def get_stock_data(ticker: str) -> dict | None:
             "dividend_score": dividend_score,  # 1-5 stars: dividend safety
             "capital_score": capital_score,    # 1-5 stars: capital safety
             "sustainable": payout_ratio <= MAX_PAYOUT_RATIO,
+            # Analyst consensus
+            "price_target_avg": round(price_target_avg, 2) if price_target_avg else None,
+            "price_target_high": round(price_target_high, 2) if price_target_high else None,
+            "price_target_low": round(price_target_low, 2) if price_target_low else None,
+            "upside_potential": upside_potential,
+            "analyst_rating": analyst_rating,
+            "analyst_count": analyst_count,
             "scanned_at": datetime.now().isoformat()
         }
         

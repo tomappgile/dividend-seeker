@@ -56,9 +56,11 @@ def sync_snapshot(conn, stock: dict, scan_date: str):
             ticker, scan_date, price, dividend_yield, dividend_rate,
             payout_ratio, pe_ratio, market_cap, week_52_high, week_52_low,
             change_6m, change_12m, dist_from_high, max_drawdown_12m,
-            beta, dividend_score, capital_score, sustainable
+            beta, dividend_score, capital_score, sustainable,
+            price_target_avg, price_target_high, price_target_low,
+            upside_potential, analyst_rating, analyst_count
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(ticker, scan_date) DO UPDATE SET
             price = excluded.price,
             dividend_yield = excluded.dividend_yield,
@@ -75,7 +77,13 @@ def sync_snapshot(conn, stock: dict, scan_date: str):
             beta = excluded.beta,
             dividend_score = excluded.dividend_score,
             capital_score = excluded.capital_score,
-            sustainable = excluded.sustainable
+            sustainable = excluded.sustainable,
+            price_target_avg = excluded.price_target_avg,
+            price_target_high = excluded.price_target_high,
+            price_target_low = excluded.price_target_low,
+            upside_potential = excluded.upside_potential,
+            analyst_rating = excluded.analyst_rating,
+            analyst_count = excluded.analyst_count
     """, (
         stock['ticker'],
         scan_date,
@@ -94,7 +102,13 @@ def sync_snapshot(conn, stock: dict, scan_date: str):
         stock.get('beta'),
         stock.get('dividend_score'),
         stock.get('capital_score'),
-        stock.get('sustainable', True)
+        stock.get('sustainable', True),
+        stock.get('price_target_avg'),
+        stock.get('price_target_high'),
+        stock.get('price_target_low'),
+        stock.get('upside_potential'),
+        stock.get('analyst_rating'),
+        stock.get('analyst_count')
     ))
 
 

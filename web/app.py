@@ -217,6 +217,113 @@ def api_top_scores():
     return jsonify(scored[:limit])
 
 
+@app.route('/api/top-opportunities')
+def api_top_opportunities():
+    """Get stocks with high yield AND positive analyst consensus (best of both worlds)"""
+    limit = request.args.get('limit', 20, type=int)
+    min_yield = request.args.get('min_yield', 5, type=float)
+    min_upside = request.args.get('min_upside', 0, type=float)
+    
+    import sqlite3
+    db_path = DATA_PATH / 'dividend_seeker.db'
+    
+    if not db_path.exists():
+        return jsonify({'error': 'Database not found'}), 500
+    
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT 
+            s.ticker, s.name, s.sector, s.market,
+            sn.price, sn.dividend_yield, sn.payout_ratio,
+            sn.dividend_score, sn.capital_score,
+            sn.price_target_avg, sn.price_target_high, sn.price_target_low,
+            sn.upside_potential, sn.analyst_rating, sn.analyst_count
+        FROM stocks s
+        JOIN snapshots sn ON s.ticker = sn.ticker
+        WHERE sn.scan_date = (SELECT MAX(scan_date) FROM snapshots)
+          AND sn.dividend_yield >= ?
+          AND sn.upside_potential >= ?
+          AND sn.analyst_count > 0
+        ORDER BY 
+            CASE WHEN sn.analyst_rating = 'Strong Buy' THEN 5
+                 WHEN sn.analyst_rating = 'Buy' THEN 4
+                 WHEN sn.analyst_rating = 'Hold' THEN 3
+                 WHEN sn.analyst_rating = 'Sell' THEN 2
+                 ELSE 1 END DESC,
+            sn.upside_potential DESC
+        LIMIT ?
+    """, (min_yield, min_upside, limit))
+    
+    results = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    return jsonify({
+        'description': 'Acciones con yield alto + consenso positivo de analistas',
+        'count': len(results),
+        'filters': {'min_yield': min_yield, 'min_upside': min_upside},
+        'stocks': results
+    })
+
+
+@app.route('/api/consensus/<ticker>')
+def api_consensus(ticker):
+    """Get analyst consensus data for a specific stock"""
+    import sqlite3
+    db_path = DATA_PATH / 'dividend_seeker.db'
+    
+    if not db_path.exists():
+        return jsonify({'error': 'Database not found'}), 500
+    
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT 
+            s.ticker, s.name,
+            sn.price,
+            sn.price_target_avg, sn.price_target_high, sn.price_target_low,
+            sn.upside_potential, sn.analyst_rating, sn.analyst_count,
+            sn.scan_date
+        FROM stocks s
+        JOIN snapshots sn ON s.ticker = sn.ticker
+        WHERE s.ticker = ?
+        ORDER BY sn.scan_date DESC
+        LIMIT 1
+    """, (ticker,))
+    
+    row = cursor.fetchone()
+    conn.close()
+    
+    if not row:
+        return jsonify({'error': 'Stock not found'}), 404
+    
+    data = dict(row)
+    
+    # Add interpretation
+    upside = data.get('upside_potential')
+    rating = data.get('analyst_rating')
+    
+    if upside and rating:
+        if upside > 20 and rating in ['Strong Buy', 'Buy']:
+            data['interpretation'] = '🟢 Muy infravalorado según analistas'
+        elif upside > 10 and rating in ['Strong Buy', 'Buy']:
+            data['interpretation'] = '🟢 Infravalorado con consenso positivo'
+        elif upside > 0 and rating == 'Hold':
+            data['interpretation'] = '🟡 Ligero potencial, consenso neutral'
+        elif upside < 0:
+            data['interpretation'] = '🔴 Sobrevalorado según analistas'
+        else:
+            data['interpretation'] = '⚪ Sin señal clara'
+    else:
+        data['interpretation'] = '⚪ Sin datos de consenso'
+    
+    return jsonify(data)
+
+
 @app.route('/api/stock/<ticker>')
 def api_stock_detail(ticker):
     """Get stock details"""
@@ -429,6 +536,240 @@ def api_top(n):
     stocks = get_all_stocks()
     stocks.sort(key=lambda x: x.get('dividend_yield', 0), reverse=True)
     return jsonify(stocks[:n])
+
+
+@app.route('/api/calendar')
+def api_calendar():
+    """Get upcoming dividend calendar from database"""
+    import sqlite3
+    
+    days = request.args.get('days', 30, type=int)
+    min_yield = request.args.get('min_yield', 0, type=float)
+    
+    db_path = DATA_PATH / 'dividend_seeker.db'
+    if not db_path.exists():
+        return jsonify({'error': 'Database not found'}), 500
+    
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT 
+            d.ticker,
+            s.name,
+            d.ex_date,
+            d.pay_date,
+            d.amount,
+            d.currency,
+            d.dividend_type,
+            d.status,
+            d.fiscal_year,
+            sn.price,
+            sn.dividend_yield as annual_yield,
+            CASE WHEN sn.price > 0 THEN ROUND((d.amount / sn.price) * 100, 2) ELSE 0 END as payment_yield,
+            CAST(julianday(d.ex_date) - julianday('now') AS INTEGER) as days_until
+        FROM dividends d
+        JOIN stocks s ON d.ticker = s.ticker
+        LEFT JOIN snapshots sn ON d.ticker = sn.ticker 
+            AND sn.scan_date = (SELECT MAX(scan_date) FROM snapshots)
+        WHERE d.ex_date >= date('now')
+          AND d.ex_date <= date('now', '+' || ? || ' days')
+        ORDER BY d.ex_date ASC
+    """, (days,))
+    
+    results = []
+    for row in cursor.fetchall():
+        item = dict(row)
+        # Filter by payment yield if specified
+        if min_yield > 0 and (item.get('payment_yield') or 0) < min_yield:
+            continue
+        results.append(item)
+    
+    conn.close()
+    
+    return jsonify({
+        'count': len(results),
+        'days_range': days,
+        'dividends': results
+    })
+
+
+@app.route('/api/calendar/urgent')
+def api_calendar_urgent():
+    """Get dividends with ex-date in next 3 days and payment yield > 3%"""
+    import sqlite3
+    
+    days = request.args.get('days', 3, type=int)  # Default 3 días
+    min_yield = request.args.get('min_yield', 3, type=float)
+    
+    db_path = DATA_PATH / 'dividend_seeker.db'
+    if not db_path.exists():
+        return jsonify({'error': 'Database not found'}), 500
+    
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute("""
+        SELECT 
+            d.ticker,
+            s.name,
+            d.ex_date,
+            d.pay_date,
+            d.amount,
+            d.currency,
+            d.dividend_type,
+            d.status,
+            sn.price,
+            CASE WHEN sn.price > 0 THEN ROUND((d.amount / sn.price) * 100, 2) ELSE 0 END as payment_yield,
+            CAST(julianday(d.ex_date) - julianday('now') AS INTEGER) as days_until
+        FROM dividends d
+        JOIN stocks s ON d.ticker = s.ticker
+        LEFT JOIN snapshots sn ON d.ticker = sn.ticker 
+            AND sn.scan_date = (SELECT MAX(scan_date) FROM snapshots)
+        WHERE d.ex_date >= date('now')
+          AND d.ex_date <= date('now', '+' || ? || ' days')
+          AND sn.price > 0
+          AND (d.amount / sn.price) * 100 >= ?
+        ORDER BY d.ex_date ASC, payment_yield DESC
+    """, (days, min_yield))
+    
+    results = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    return jsonify({
+        'count': len(results),
+        'days_ahead': days,
+        'min_yield': min_yield,
+        'alert': f'🚨 Ex-dates próximos {days} días con yield >{min_yield}%',
+        'dividends': results
+    })
+
+
+@app.route('/api/stock/<ticker>/health')
+def api_stock_health(ticker):
+    """Get dividend sustainability health check for a stock"""
+    import sqlite3
+    
+    db_path = DATA_PATH / 'dividend_seeker.db'
+    if not db_path.exists():
+        return jsonify({'error': 'Database not found'}), 500
+    
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    # Get latest snapshot data
+    cursor.execute("""
+        SELECT s.ticker, s.name, s.sector,
+               sn.price, sn.dividend_yield, sn.payout_ratio, sn.pe_ratio,
+               sn.dividend_score, sn.capital_score
+        FROM stocks s
+        LEFT JOIN snapshots sn ON s.ticker = sn.ticker
+            AND sn.scan_date = (SELECT MAX(scan_date) FROM snapshots)
+        WHERE s.ticker = ?
+    """, (ticker,))
+    
+    stock_row = cursor.fetchone()
+    if not stock_row:
+        conn.close()
+        return jsonify({'error': 'Stock not found'}), 404
+    
+    stock = dict(stock_row)
+    
+    # Get fundamentals if available
+    cursor.execute("""
+        SELECT * FROM fundamentals 
+        WHERE ticker = ? 
+        ORDER BY report_date DESC LIMIT 1
+    """, (ticker,))
+    
+    fund_row = cursor.fetchone()
+    fundamentals = dict(fund_row) if fund_row else None
+    
+    # Calculate health score and risk level
+    alerts = []
+    risk_score = 0  # 0 = healthy, higher = more risky
+    
+    payout = stock.get('payout_ratio') or 0
+    div_yield = stock.get('dividend_yield') or 0
+    
+    # Payout ratio checks
+    if payout > 100:
+        alerts.append('🚨 Payout ratio >100% - pagando más de lo que ganan')
+        risk_score += 3
+    elif payout > 80:
+        alerts.append('⚠️ Payout ratio alto (>80%)')
+        risk_score += 1
+    
+    # Yield too high can be a trap
+    if div_yield > 10:
+        alerts.append('⚠️ Yield muy alto (>10%) - posible trampa de dividendo')
+        risk_score += 2
+    
+    # Check fundamentals if available
+    if fundamentals:
+        eps_growth = fundamentals.get('eps_growth_yoy')
+        if eps_growth is not None and eps_growth < -10:
+            alerts.append(f'🚨 EPS cayendo {eps_growth:.1f}% YoY')
+            risk_score += 2
+        
+        fcf = fundamentals.get('fcf')
+        if fcf is not None and fcf < 0:
+            alerts.append('🚨 Free Cash Flow negativo')
+            risk_score += 3
+        
+        coverage = fundamentals.get('dividend_coverage')
+        if coverage is not None and coverage < 1:
+            alerts.append(f'🚨 Cobertura dividendo insuficiente ({coverage:.2f}x)')
+            risk_score += 2
+        
+        impairments = fundamentals.get('impairments')
+        if impairments is not None and impairments > 0:
+            alerts.append(f'⚠️ Impairments/deterioros: ${impairments/1e9:.1f}B')
+            risk_score += 1
+    
+    # Determine risk level
+    if risk_score == 0:
+        risk_level = 'low'
+        risk_emoji = '🟢'
+        risk_label = 'Sostenible'
+    elif risk_score <= 2:
+        risk_level = 'medium'
+        risk_emoji = '🟡'
+        risk_label = 'Vigilar'
+    else:
+        risk_level = 'high'
+        risk_emoji = '🔴'
+        risk_label = 'Riesgo'
+    
+    # Calculate sustainability score (1-5)
+    sustainability_score = max(1, 5 - risk_score)
+    
+    conn.close()
+    
+    return jsonify({
+        'ticker': ticker,
+        'name': stock.get('name'),
+        'sector': stock.get('sector'),
+        'health': {
+            'risk_level': risk_level,
+            'risk_emoji': risk_emoji,
+            'risk_label': risk_label,
+            'sustainability_score': sustainability_score,
+            'alerts': alerts,
+            'risk_score_raw': risk_score
+        },
+        'metrics': {
+            'dividend_yield': div_yield,
+            'payout_ratio': payout,
+            'pe_ratio': stock.get('pe_ratio'),
+            'dividend_score': stock.get('dividend_score'),
+            'capital_score': stock.get('capital_score')
+        },
+        'fundamentals': fundamentals
+    })
 
 
 if __name__ == '__main__':
