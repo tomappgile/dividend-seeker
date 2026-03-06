@@ -136,7 +136,8 @@ def api_stats():
         'max_yield': round(max(yields), 2) if yields else 0,
         'min_yield': round(min(yields), 2) if yields else 0,
         'tier1_count': len(data.get('tier1_high_sustainable', [])),
-        'last_scan': data.get('scan_date', '2026-02-15')
+        'last_scan': data.get('scan_date', '2026-02-15'),
+        'exported_at': data.get('exported_at', None)
     })
 
 

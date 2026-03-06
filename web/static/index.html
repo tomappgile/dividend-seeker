@@ -169,7 +169,7 @@
     <div class="container">
         <header>
             <h1>📈 Dividend <span>Seeker</span></h1>
-            <div class="last-scan">Último scan: <span id="lastScan">-</span></div>
+            <div class="last-scan">Último scan: <span id="lastScan">-</span> | Actualizado: <span id="exportedAt">-</span></div>
         </header>
         
         <div class="stats">
@@ -269,6 +269,7 @@
             document.getElementById('avgYield').textContent = data.avg_yield + '%';
             document.getElementById('maxYield').textContent = data.max_yield + '%';
             document.getElementById('lastScan').textContent = data.last_scan || 'N/A';
+            document.getElementById('exportedAt').textContent = data.exported_at ? data.exported_at.split('T')[0] : 'N/A';
             
             // Count stocks with score >= 8
             const topRes = await fetch(`${API}/api/top-scores?limit=200`);

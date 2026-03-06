@@ -27,6 +27,11 @@ echo ""
 echo "💾 Syncing to database..."
 python scripts/sync_db.py
 
+# Export to MAIN_LIST.json for web dashboard
+echo ""
+echo "📤 Exporting to MAIN_LIST.json..."
+python scripts/export_main_list.py
+
 # Smart analysis - only new/changes/urgent
 echo ""
 echo "🧠 Running smart analysis..."
