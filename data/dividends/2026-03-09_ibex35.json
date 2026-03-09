@@ -1,7 +1,9 @@
 {
-  "updated_at": "2026-03-09T03:00:41.321631",
-  "total": 13,
-  "top_20": [
+  "market": "ibex35",
+  "scanned_at": "2026-03-09T03:00:41.321245",
+  "min_yield": 5.0,
+  "total_candidates": 13,
+  "candidates": [
     {
       "ticker": "NTGY.MC",
       "name": "NATURGY ENERGY GROUP, S.A.",

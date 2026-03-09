@@ -27,6 +27,11 @@ echo ""
 echo "💾 Syncing to database..."
 python scripts/sync_db.py
 
+# Update dividend frequencies and per-payment amounts
+echo ""
+echo "📅 Updating dividend frequencies..."
+python scripts/dividend_frequency.py
+
 # Export to MAIN_LIST.json for web dashboard
 echo ""
 echo "📤 Exporting to MAIN_LIST.json..."

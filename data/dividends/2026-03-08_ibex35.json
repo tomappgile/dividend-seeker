@@ -1,7 +1,9 @@
 {
-  "updated_at": "2026-03-09T03:00:41.321631",
-  "total": 13,
-  "top_20": [
+  "market": "ibex35",
+  "scanned_at": "2026-03-08T03:00:42.455658",
+  "min_yield": 5.0,
+  "total_candidates": 13,
+  "candidates": [
     {
       "ticker": "NTGY.MC",
       "name": "NATURGY ENERGY GROUP, S.A.",
@@ -34,7 +36,7 @@
       "upside_potential": 7.6,
       "analyst_rating": "Hold",
       "analyst_count": 18,
-      "scanned_at": "2026-03-09T03:00:40.356303"
+      "scanned_at": "2026-03-08T03:00:41.265196"
     },
     {
       "ticker": "TEF.MC",
@@ -68,7 +70,7 @@
       "upside_potential": 6.5,
       "analyst_rating": "Hold",
       "analyst_count": 22,
-      "scanned_at": "2026-03-09T03:00:41.320898"
+      "scanned_at": "2026-03-08T03:00:42.133736"
     },
     {
       "ticker": "UNI.MC",
@@ -102,7 +104,7 @@
       "upside_potential": 5.6,
       "analyst_rating": "Sell",
       "analyst_count": 18,
-      "scanned_at": "2026-03-09T03:00:41.151920"
+      "scanned_at": "2026-03-08T03:00:41.923432"
     },
     {
       "ticker": "SAB.MC",
@@ -136,7 +138,7 @@
       "upside_potential": 16.2,
       "analyst_rating": "Buy",
       "analyst_count": 18,
-      "scanned_at": "2026-03-09T03:00:40.641478"
+      "scanned_at": "2026-03-08T03:00:41.661989"
     },
     {
       "ticker": "ENG.MC",
@@ -156,9 +158,9 @@
       "52w_high": 15.46,
       "52w_low": 12.3,
       "dist_from_high": 4.5,
-      "max_drawdown_12m": 10.2,
+      "max_drawdown_12m": 8.8,
       "change_6m": 15.3,
-      "change_12m": 23.0,
+      "change_12m": 28.4,
       "beta": 0.44,
       "ex_dividend_date": "2026-06-30",
       "dividend_score": 3,
@@ -170,7 +172,7 @@
       "upside_potential": 2.5,
       "analyst_rating": "Hold",
       "analyst_count": 19,
-      "scanned_at": "2026-03-09T03:00:39.202964"
+      "scanned_at": "2026-03-08T03:00:40.202308"
     },
     {
       "ticker": "LOG.MC",
@@ -204,7 +206,7 @@
       "upside_potential": 4.5,
       "analyst_rating": "Hold",
       "analyst_count": 11,
-      "scanned_at": "2026-03-09T03:00:39.727838"
+      "scanned_at": "2026-03-08T03:00:40.509114"
     },
     {
       "ticker": "COL.MC",
@@ -238,7 +240,7 @@
       "upside_potential": 24.7,
       "analyst_rating": "Buy",
       "analyst_count": 19,
-      "scanned_at": "2026-03-09T03:00:38.680195"
+      "scanned_at": "2026-03-08T03:00:39.434420"
     },
     {
       "ticker": "BKT.MC",
@@ -272,7 +274,7 @@
       "upside_potential": 12.8,
       "analyst_rating": "Hold",
       "analyst_count": 22,
-      "scanned_at": "2026-03-09T03:00:38.679355"
+      "scanned_at": "2026-03-08T03:00:39.324857"
     },
     {
       "ticker": "RED.MC",
@@ -306,7 +308,7 @@
       "upside_potential": 11.2,
       "analyst_rating": "Buy",
       "analyst_count": 22,
-      "scanned_at": "2026-03-09T03:00:40.444036"
+      "scanned_at": "2026-03-08T03:00:41.324643"
     },
     {
       "ticker": "VIS.MC",
@@ -340,7 +342,7 @@
       "upside_potential": 18.9,
       "analyst_rating": "Strong Buy",
       "analyst_count": 12,
-      "scanned_at": "2026-03-09T03:00:41.274889"
+      "scanned_at": "2026-03-08T03:00:42.455270"
     },
     {
       "ticker": "REP.MC",
@@ -374,7 +376,7 @@
       "upside_potential": -13.0,
       "analyst_rating": "Buy",
       "analyst_count": 23,
-      "scanned_at": "2026-03-09T03:00:40.515608"
+      "scanned_at": "2026-03-08T03:00:41.325299"
     },
     {
       "ticker": "CABK.MC",
@@ -408,7 +410,7 @@
       "upside_potential": 15.4,
       "analyst_rating": "Buy",
       "analyst_count": 21,
-      "scanned_at": "2026-03-09T03:00:38.470764"
+      "scanned_at": "2026-03-08T03:00:39.340018"
     },
     {
       "ticker": "BBVA.MC",
@@ -442,7 +444,7 @@
       "upside_potential": 14.7,
       "analyst_rating": "Buy",
       "analyst_count": 22,
-      "scanned_at": "2026-03-09T03:00:38.564990"
+      "scanned_at": "2026-03-08T03:00:39.340626"
     }
   ]
 }
