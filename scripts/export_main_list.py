@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """
 Export latest snapshot data to MAIN_LIST.json for web dashboard
+
+Column naming convention (Hungarian notation):
+- i = INTEGER, s = TEXT, r = REAL, b = BOOLEAN, d = DATE, t = TIMESTAMP
 """
 
 import json
@@ -8,7 +11,6 @@ import sqlite3
 from datetime import datetime
 from pathlib import Path
 
-# Paths
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_DIR = SCRIPT_DIR.parent
 DB_PATH = PROJECT_DIR / "data" / "dividend_seeker.db"
@@ -21,40 +23,40 @@ def export_main_list():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     
-    # Get latest scan date
-    cursor = conn.execute("SELECT MAX(scan_date) FROM snapshots")
+    cursor = conn.execute("SELECT MAX(dscan_date) FROM snapshots")
     latest_date = cursor.fetchone()[0]
     
     if not latest_date:
         print("❌ No snapshots found in database")
         return
     
-    # Get all stocks with latest snapshot data (yield > 5%)
     query = """
     SELECT 
-        s.ticker,
-        st.name,
-        st.sector,
-        st.industry,
-        st.currency,
-        s.price,
-        s.dividend_yield,
-        s.dividend_rate,
-        s.payout_ratio,
-        s.pe_ratio,
-        s.market_cap,
-        s.week_52_high as "52w_high",
-        s.week_52_low as "52w_low",
-        s.dividend_score,
-        s.capital_score,
-        s.sustainable,
-        st.ocean_accessible,
-        st.market as ocean_market
+        s.sticker,
+        st.sname,
+        st.ssector,
+        st.sindustry,
+        st.scurrency,
+        s.rprice,
+        s.rdividend_yield,
+        s.rdividend_rate,
+        s.rpayout_ratio,
+        s.rpe_ratio,
+        s.rmarket_cap,
+        s.rweek_52_high,
+        s.rweek_52_low,
+        s.idividend_score,
+        s.icapital_score,
+        s.bsustainable,
+        st.bocean_accessible,
+        st.smarket,
+        st.bbroker_caixabank,
+        st.bbroker_n26
     FROM snapshots s
-    JOIN stocks st ON s.ticker = st.ticker
-    WHERE s.scan_date = ?
-    AND s.dividend_yield >= 5.0
-    ORDER BY s.dividend_yield DESC
+    JOIN stocks st ON s.sticker = st.sticker
+    WHERE s.dscan_date = ?
+    AND s.rdividend_yield >= 5.0
+    ORDER BY s.rdividend_yield DESC
     """
     
     cursor = conn.execute(query, (latest_date,))
@@ -63,30 +65,31 @@ def export_main_list():
     stocks = []
     for row in rows:
         stock = {
-            "ticker": row["ticker"],
-            "name": row["name"],
-            "sector": row["sector"],
-            "industry": row["industry"],
-            "currency": row["currency"],
-            "price": row["price"],
-            "dividend_yield": round(row["dividend_yield"], 2) if row["dividend_yield"] else None,
-            "dividend_rate": row["dividend_rate"],
-            "payout_ratio": round(row["payout_ratio"], 2) if row["payout_ratio"] else None,
-            "pe_ratio": round(row["pe_ratio"], 2) if row["pe_ratio"] else None,
-            "market_cap": row["market_cap"],
-            "52w_high": row["52w_high"],
-            "52w_low": row["52w_low"],
-            "dividend_score": row["dividend_score"],
-            "capital_score": row["capital_score"],
-            "sustainable": bool(row["sustainable"]),
-            "ocean_accessible": bool(row["ocean_accessible"]),
-            "ocean_market": row["ocean_market"]
+            "ticker": row["sticker"],
+            "name": row["sname"],
+            "sector": row["ssector"],
+            "industry": row["sindustry"],
+            "currency": row["scurrency"],
+            "price": row["rprice"],
+            "dividend_yield": round(row["rdividend_yield"], 2) if row["rdividend_yield"] else None,
+            "dividend_rate": row["rdividend_rate"],
+            "payout_ratio": round(row["rpayout_ratio"], 2) if row["rpayout_ratio"] else None,
+            "pe_ratio": round(row["rpe_ratio"], 2) if row["rpe_ratio"] else None,
+            "market_cap": row["rmarket_cap"],
+            "52w_high": row["rweek_52_high"],
+            "52w_low": row["rweek_52_low"],
+            "dividend_score": row["idividend_score"],
+            "capital_score": row["icapital_score"],
+            "sustainable": bool(row["bsustainable"]),
+            "ocean_accessible": bool(row["bocean_accessible"]),
+            "ocean_market": row["smarket"],
+            "broker_caixabank": bool(row["bbroker_caixabank"]),
+            "broker_n26": bool(row["bbroker_n26"])
         }
         stocks.append(stock)
     
     conn.close()
     
-    # Create output
     output = {
         "scan_date": latest_date,
         "exported_at": datetime.now().isoformat(),
@@ -94,7 +97,6 @@ def export_main_list():
         "stocks": stocks
     }
     
-    # Write to file
     with open(OUTPUT_PATH, "w") as f:
         json.dump(output, f, indent=2)
     
