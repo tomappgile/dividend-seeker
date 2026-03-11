@@ -1,14 +1,7 @@
-🔔 <b>Dividend Seeker - 05 Mar 2026</b>
+🔔 <b>Dividend Seeker - 11 Mar 2026</b>
 
 🚨 <b>URGENTE (Yield > 6.5%)</b>
-  🔥 <b>NTGY.MC</b> | 9.7% | Utilities
-  ⚠️ <b>TEF.MC</b> | 8.4% | Communication S
-  🔥 <b>ENG.MC</b> | 6.8% | Utilities
-  ⚠️ <b>LOG.MC</b> | 6.6% | Industrials
+  🔥 <b>UNI.MC</b> | 6.9% | Financial Servi
+  ⚠️ <b>SAB.MC</b> | 6.8% | Financial Servi
 
-🆕 <b>Nuevos candidatos (>5%)</b>
-  ⚠️ <b>ACX.MC</b> | 5.1% | Basic Materials
-  ✅ <b>BBVA.MC</b> | 5.1% | Financial Servi
-  ✅ <b>CABK.MC</b> | 5.0% | Financial Servi
-
-📊 <i>Total alertas: 7</i>
+📊 <i>Total alertas: 2</i>

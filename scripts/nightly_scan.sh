@@ -32,6 +32,11 @@ echo ""
 echo "📅 Updating dividend frequencies..."
 python scripts/dividend_frequency.py
 
+# Import dividend history and calculate TTM yields
+echo ""
+echo "📜 Importing dividend history..."
+python scripts/dividend_history.py --all
+
 # Export to MAIN_LIST.json for web dashboard
 echo ""
 echo "📤 Exporting to MAIN_LIST.json..."
