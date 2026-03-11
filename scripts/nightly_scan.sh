@@ -37,6 +37,11 @@ echo ""
 echo "📜 Importing dividend history..."
 python scripts/dividend_history.py --all
 
+# Update analyst consensus and sentiment
+echo ""
+echo "📈 Updating analyst consensus..."
+python scripts/consensus_tracker.py --all
+
 # Export to MAIN_LIST.json for web dashboard
 echo ""
 echo "📤 Exporting to MAIN_LIST.json..."
