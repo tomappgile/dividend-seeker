@@ -14,7 +14,7 @@ echo "🌙 Starting nightly dividend scan at $(date)"
 echo "================================================"
 
 # Scan all markets
-MARKETS="sp500 eurostoxx50 dax40 cac40 ftse_mib ibex35"
+MARKETS="sp500 eurostoxx50 dax40 cac40 ftse_mib ibex35 nikkei225"
 
 for market in $MARKETS; do
     echo ""
