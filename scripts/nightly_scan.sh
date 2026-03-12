@@ -42,6 +42,11 @@ echo ""
 echo "📈 Updating analyst consensus..."
 python scripts/consensus_tracker.py --all
 
+# Verify dividends coming up in next 30 days
+echo ""
+echo "🔍 Verifying upcoming dividends..."
+python scripts/dividend_verifier.py --verify 30
+
 # Export to MAIN_LIST.json for web dashboard
 echo ""
 echo "📤 Exporting to MAIN_LIST.json..."
@@ -56,15 +61,31 @@ python scripts/smart_scan.py
 MSG_FILE="$PROJECT_DIR/data/candidates/telegram_message.txt"
 if [ -f "$MSG_FILE" ] && [ -s "$MSG_FILE" ]; then
     echo ""
-    echo "📨 Message ready for Telegram:"
-    cat "$MSG_FILE"
-    echo ""
-    echo "---"
-    echo "SMART_ALERT_READY"  # Signal to cron agent
+    echo "📨 Sending message to Telegram group Dividend Hunters..."
+    
+    # Read message and escape for JSON
+    MSG_CONTENT=$(cat "$MSG_FILE" | python3 -c 'import sys,json; print(json.dumps(sys.stdin.read()))')
+    
+    # Send to Telegram using direct API (openclaw message send has issues)
+    BOT_TOKEN="8702609816:AAHNH48jCefCcxrRAvFqIwkMoLJjwG-re8I"
+    CHAT_ID="-5000716003"
+    
+    RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+      -H "Content-Type: application/json" \
+      -d "{\"chat_id\": ${CHAT_ID}, \"text\": ${MSG_CONTENT}, \"parse_mode\": \"HTML\"}")
+    
+    if echo "$RESPONSE" | grep -q '"ok":true'; then
+        echo "✅ Message sent successfully to Dividend Hunters!"
+        echo "SMART_ALERT_SENT"
+    else
+        echo "❌ Failed to send message:"
+        echo "$RESPONSE"
+        echo "SMART_ALERT_FAILED"
+    fi
 else
     echo ""
     echo "📭 No new alerts to send"
-    echo "NO_NEW_ALERTS"  # Signal to cron agent
+    echo "NO_NEW_ALERTS"
 fi
 
 echo ""
