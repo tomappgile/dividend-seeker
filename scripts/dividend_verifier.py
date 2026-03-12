@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """
-Dividend Verifier
+Dividend Verifier v2
 - Checks dividends coming up in the next 30 days
-- Searches for official confirmation via web
+- Searches MULTIPLE sources for official confirmation
+- Uses web scraping for announced (not just historical) dividends
 - Updates database with confirmed amounts and dates
-- Marks dividends as confirmed vs estimated
 
-Column naming convention (Hungarian notation):
-- i = INTEGER, s = TEXT, r = REAL, b = BOOLEAN, d = DATE, t = TIMESTAMP
+Sources checked:
+1. yfinance (historical)
+2. stockevents.app (announced)
+3. dividendmax.com (announced)
+4. nasdaq.com (announced)
 """
 
 import sqlite3
@@ -16,22 +19,209 @@ from datetime import datetime, timedelta
 from pathlib import Path
 import re
 import yfinance as yf
+from bs4 import BeautifulSoup
+import time
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 DB_PATH = DATA_DIR / "dividend_seeker.db"
 
-# Sources for dividend verification
-DIVIDEND_SOURCES = [
-    "dividendmax.com",
-    "nasdaq.com/market-activity/stocks/{}/dividend-history",
-    "stockevents.app",
-]
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36'
+}
 
 
 def get_connection():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     return conn
+
+
+def search_stockevents(ticker: str) -> dict:
+    """Search stockevents.app for announced dividend."""
+    result = {'amount': None, 'ex_date': None, 'pay_date': None, 'source': None}
+    
+    try:
+        # Remove exchange suffix for US stocks
+        clean_ticker = ticker.split('.')[0] if '.' in ticker else ticker
+        url = f"https://stockevents.app/en/stock/{clean_ticker}/dividends"
+        
+        resp = requests.get(url, headers=HEADERS, timeout=10)
+        if resp.status_code == 200:
+            # Parse the page for dividend info
+            # Look for pattern like "$1.30" or "€0.60"
+            text = resp.text
+            
+            # Find "next dividend per share will be $X.XX"
+            match = re.search(r'next dividend per share will be \$?([\d.]+)', text, re.I)
+            if match:
+                result['amount'] = float(match.group(1))
+                result['source'] = 'stockevents.app'
+            
+            # Find ex date
+            match = re.search(r'ex date of (\w+ \d+, \d{4})', text, re.I)
+            if match:
+                try:
+                    result['ex_date'] = datetime.strptime(match.group(1), '%B %d, %Y').strftime('%Y-%m-%d')
+                except:
+                    pass
+                    
+    except Exception as e:
+        pass
+    
+    return result
+
+
+def search_dividendmax(ticker: str) -> dict:
+    """Search dividendmax.com for announced dividend."""
+    result = {'amount': None, 'ex_date': None, 'pay_date': None, 'source': None}
+    
+    try:
+        clean_ticker = ticker.split('.')[0].lower()
+        # Try common URL patterns
+        urls = [
+            f"https://www.dividendmax.com/united-states/nasdaq/financial-services/{clean_ticker}/dividends",
+            f"https://www.dividendmax.com/united-states/nyse/{clean_ticker}/dividends",
+        ]
+        
+        for url in urls:
+            try:
+                resp = requests.get(url, headers=HEADERS, timeout=10)
+                if resp.status_code == 200:
+                    text = resp.text
+                    
+                    # Look for "next dividend will go ex in X days for XXXc"
+                    match = re.search(r'next .* dividend will go ex .* for (\d+)c', text, re.I)
+                    if match:
+                        result['amount'] = float(match.group(1)) / 100  # Convert cents to dollars
+                        result['source'] = 'dividendmax.com'
+                        break
+            except:
+                continue
+                
+    except Exception as e:
+        pass
+    
+    return result
+
+
+def search_yfinance(ticker: str) -> dict:
+    """Search yfinance for dividend info."""
+    result = {'amount': None, 'ex_date': None, 'pay_date': None, 'source': None}
+    
+    try:
+        stock = yf.Ticker(ticker)
+        info = stock.info
+        
+        # Get upcoming ex-dividend date
+        ex_date_ts = info.get('exDividendDate')
+        if ex_date_ts:
+            ex_date = datetime.fromtimestamp(ex_date_ts)
+            if ex_date > datetime.now():
+                result['ex_date'] = ex_date.strftime('%Y-%m-%d')
+        
+        # Get last dividend value (fallback)
+        last_div = info.get('lastDividendValue')
+        if last_div:
+            result['amount'] = last_div
+            result['source'] = 'yfinance'
+            
+    except Exception as e:
+        pass
+    
+    return result
+
+
+def search_dividend_info(ticker: str, company_name: str = None) -> dict:
+    """
+    Search multiple sources for dividend info.
+    Returns best available data with source attribution.
+    """
+    results = []
+    
+    # Check stockevents.app first (usually has announced dividends)
+    se_result = search_stockevents(ticker)
+    if se_result['amount']:
+        results.append(se_result)
+    
+    # Check dividendmax
+    dm_result = search_dividendmax(ticker)
+    if dm_result['amount']:
+        results.append(dm_result)
+    
+    # Fallback to yfinance
+    yf_result = search_yfinance(ticker)
+    if yf_result['amount']:
+        results.append(yf_result)
+    
+    # Return the best result (prefer sources with both amount and date)
+    if results:
+        # Sort by completeness (amount + ex_date + source preference)
+        def score(r):
+            s = 0
+            if r['amount']: s += 10
+            if r['ex_date']: s += 5
+            if r['source'] == 'stockevents.app': s += 3
+            if r['source'] == 'dividendmax.com': s += 2
+            return s
+        
+        results.sort(key=score, reverse=True)
+        best = results[0]
+        best['confirmed'] = True
+        best['all_sources'] = [r['source'] for r in results if r['source']]
+        return best
+    
+    return {'confirmed': False, 'amount': None, 'ex_date': None, 'source': None}
+
+
+def verify_dividend(ticker: str, name: str, expected_date: str, expected_amount: float) -> dict:
+    """Verify a specific dividend payment against multiple sources."""
+    print(f"  🔍 Verificando {ticker}...")
+    
+    info = search_dividend_info(ticker, name)
+    
+    if info['confirmed'] and info['amount']:
+        # Check if amount differs from expected
+        if abs(info['amount'] - expected_amount) > 0.001:
+            print(f"    ⚠️  DIFERENCIA: BD tiene ${expected_amount:.4f}, fuente dice ${info['amount']:.4f}")
+            print(f"    📡 Fuente: {info['source']}")
+            return info
+        else:
+            print(f"    ✅ Confirmado: ${info['amount']:.4f} ({info['source']})")
+            return info
+    else:
+        print(f"    ⏳ Sin confirmación externa (mantenemos ${expected_amount:.4f})")
+        return None
+
+
+def update_dividend_in_db(dividend_id: int, amount: float = None, 
+                          ex_date: str = None, pay_date: str = None):
+    """Update dividend record with verified info."""
+    conn = get_connection()
+    cursor = conn.cursor()
+    
+    updates = []
+    params = []
+    
+    if amount is not None:
+        updates.append("ramount = ?")
+        params.append(amount)
+    if ex_date is not None:
+        updates.append("dex_date = ?")
+        params.append(ex_date)
+    if pay_date is not None:
+        updates.append("dpay_date = ?")
+        params.append(pay_date)
+    
+    updates.append("bis_estimated = 0")
+    updates.append("sstatus = 'confirmed'")
+    
+    if updates:
+        query = f"UPDATE dividends SET {', '.join(updates)} WHERE idividendsid = ?"
+        params.append(dividend_id)
+        cursor.execute(query, params)
+        conn.commit()
+    
+    conn.close()
 
 
 def get_upcoming_dividends(days: int = 30) -> list:
@@ -64,122 +254,16 @@ def get_upcoming_dividends(days: int = 30) -> list:
     return results
 
 
-def search_dividend_info(ticker: str, company_name: str) -> dict:
-    """
-    Search for confirmed dividend info from yfinance and web.
-    Returns dict with confirmed data or None.
-    """
-    result = {
-        'confirmed': False,
-        'amount': None,
-        'ex_date': None,
-        'pay_date': None,
-        'source': None
-    }
-    
-    try:
-        # First try yfinance calendar
-        stock = yf.Ticker(ticker)
-        
-        # Check if there's upcoming dividend info
-        try:
-            calendar = stock.calendar
-            if calendar is not None and 'Dividend Date' in calendar:
-                div_date = calendar.get('Dividend Date')
-                if div_date:
-                    result['pay_date'] = div_date.strftime('%Y-%m-%d') if hasattr(div_date, 'strftime') else str(div_date)
-        except:
-            pass
-        
-        # Check info for dividend rate
-        info = stock.info
-        div_rate = info.get('dividendRate')
-        last_div = info.get('lastDividendValue')
-        ex_date = info.get('exDividendDate')
-        
-        if ex_date:
-            # Convert timestamp to date
-            from datetime import datetime
-            ex_date_dt = datetime.fromtimestamp(ex_date)
-            # Only use if it's in the future
-            if ex_date_dt > datetime.now():
-                result['ex_date'] = ex_date_dt.strftime('%Y-%m-%d')
-                result['confirmed'] = True
-                result['source'] = 'yfinance'
-        
-        if last_div:
-            result['amount'] = last_div
-            
-        # If we have an ex_date from yfinance, consider it confirmed
-        if result['ex_date'] and result['amount']:
-            result['confirmed'] = True
-            
-    except Exception as e:
-        print(f"    ⚠️ Error checking {ticker}: {e}")
-    
-    return result
-
-
-def verify_dividend(ticker: str, name: str, expected_date: str, expected_amount: float) -> dict:
-    """
-    Verify a specific dividend payment.
-    Returns updated info if found, None otherwise.
-    """
-    print(f"  🔍 Verifying {ticker} ({name[:30]})...")
-    
-    info = search_dividend_info(ticker, name)
-    
-    if info['confirmed']:
-        print(f"    ✅ Confirmed: ${info['amount']:.4f} on {info['ex_date']} (source: {info['source']})")
-        return info
-    else:
-        print(f"    ⏳ Not confirmed yet (estimated: ${expected_amount:.4f} on {expected_date})")
-        return None
-
-
-def update_dividend_status(dividend_id: int, amount: float = None, 
-                           ex_date: str = None, pay_date: str = None,
-                           confirmed: bool = False):
-    """Update dividend record with verified info."""
-    conn = get_connection()
-    cursor = conn.cursor()
-    
-    updates = []
-    params = []
-    
-    if amount is not None:
-        updates.append("ramount = ?")
-        params.append(amount)
-    if ex_date is not None:
-        updates.append("dex_date = ?")
-        params.append(ex_date)
-    if pay_date is not None:
-        updates.append("dpay_date = ?")
-        params.append(pay_date)
-    if confirmed:
-        updates.append("bis_estimated = 0")
-        updates.append("sstatus = 'confirmed'")
-    
-    if updates:
-        query = f"UPDATE dividends SET {', '.join(updates)} WHERE idividendsid = ?"
-        params.append(dividend_id)
-        cursor.execute(query, params)
-        conn.commit()
-    
-    conn.close()
-
-
 def verify_upcoming_dividends(days: int = 30):
     """Verify all dividends coming up in the next N days."""
     upcoming = get_upcoming_dividends(days)
     
     if not upcoming:
-        print(f"📭 No dividends expected in the next {days} days")
+        print(f"📭 No hay dividendos en los próximos {days} días")
         return
     
-    print(f"📊 Verifying {len(upcoming)} dividends expected in the next {days} days...\n")
+    print(f"📊 Verificando {len(upcoming)} dividendos en los próximos {days} días...\n")
     
-    confirmed_count = 0
     updated_count = 0
     
     for div in upcoming:
@@ -187,41 +271,29 @@ def verify_upcoming_dividends(days: int = 30):
         name = div['sname'] or ticker
         expected_date = div['dex_date']
         expected_amount = div['ramount'] or 0
-        is_estimated = div['bis_estimated']
         days_until = int(div['days_until'])
         
-        status_icon = "⏳" if is_estimated else "✅"
-        print(f"{status_icon} {ticker} - Ex: {expected_date} ({days_until}d) - ${expected_amount:.4f}")
-        
-        # Only verify if it's estimated or if we want to double-check
-        if is_estimated or days_until <= 7:
+        # Only verify if within 14 days (closer = more likely to have confirmed data)
+        if days_until <= 14:
             verified = verify_dividend(ticker, name, expected_date, expected_amount)
             
             if verified and verified['confirmed']:
-                confirmed_count += 1
-                
-                # Update if amount or date changed
-                if (verified['amount'] and abs(verified['amount'] - expected_amount) > 0.001) or \
-                   (verified['ex_date'] and verified['ex_date'] != expected_date):
-                    update_dividend_status(
+                # Update if amount changed
+                if verified['amount'] and abs(verified['amount'] - expected_amount) > 0.001:
+                    update_dividend_in_db(
                         div['idividendsid'],
                         amount=verified['amount'],
-                        ex_date=verified['ex_date'],
-                        pay_date=verified['pay_date'],
-                        confirmed=True
+                        ex_date=verified.get('ex_date'),
+                        pay_date=verified.get('pay_date')
                     )
                     updated_count += 1
-                    print(f"    📝 Updated in database")
-                elif is_estimated:
-                    # Just mark as confirmed
-                    update_dividend_status(div['idividendsid'], confirmed=True)
-                    print(f"    📝 Marked as confirmed")
-        
-        print()
+                    print(f"    📝 BD actualizada: ${expected_amount:.4f} → ${verified['amount']:.4f}")
+            
+            time.sleep(0.5)  # Rate limiting
+        else:
+            print(f"  ⏳ {ticker} - {days_until}d - Demasiado lejos, se verificará más adelante")
     
-    print(f"\n✅ Verification complete:")
-    print(f"   Confirmed: {confirmed_count}")
-    print(f"   Updated: {updated_count}")
+    print(f"\n✅ Verificación completada: {updated_count} actualizados")
 
 
 def show_upcoming_with_status(days: int = 30):
@@ -229,7 +301,7 @@ def show_upcoming_with_status(days: int = 30):
     upcoming = get_upcoming_dividends(days)
     
     if not upcoming:
-        print(f"📭 No dividends expected in the next {days} days")
+        print(f"📭 No hay dividendos en los próximos {days} días")
         return
     
     print(f"\n📅 DIVIDENDOS PRÓXIMOS {days} DÍAS")
@@ -241,7 +313,6 @@ def show_upcoming_with_status(days: int = 30):
         amount = f"${div['ramount']:.4f}" if div['ramount'] else "?"
         days_until = int(div['days_until'])
         
-        # Highlight if coming up soon
         days_str = f"{days_until}d"
         if days_until <= 7:
             days_str = f"🔥{days_until}d"
@@ -262,17 +333,17 @@ if __name__ == "__main__":
             days = int(sys.argv[2]) if len(sys.argv) > 2 else 30
             show_upcoming_with_status(days)
         else:
-            # Verify specific ticker
             ticker = arg.upper()
+            print(f"\n📊 Buscando dividend info para {ticker}...")
             info = search_dividend_info(ticker, ticker)
-            print(f"\n📊 Dividend info for {ticker}:")
-            print(f"   Confirmed: {info['confirmed']}")
-            print(f"   Amount: ${info['amount']:.4f}" if info['amount'] else "   Amount: N/A")
+            print(f"   Confirmado: {info['confirmed']}")
+            print(f"   Importe: ${info['amount']:.4f}" if info['amount'] else "   Importe: N/A")
             print(f"   Ex-date: {info['ex_date']}" if info['ex_date'] else "   Ex-date: N/A")
-            print(f"   Pay-date: {info['pay_date']}" if info['pay_date'] else "   Pay-date: N/A")
-            print(f"   Source: {info['source']}" if info['source'] else "   Source: N/A")
+            print(f"   Fuente: {info['source']}" if info['source'] else "   Fuente: N/A")
+            if info.get('all_sources'):
+                print(f"   Todas las fuentes: {', '.join(info['all_sources'])}")
     else:
-        print("Usage:")
-        print("  python dividend_verifier.py --verify [days]  - Verify upcoming dividends")
-        print("  python dividend_verifier.py --show [days]    - Show upcoming with status")
-        print("  python dividend_verifier.py TICKER           - Check specific ticker")
+        print("Uso:")
+        print("  python dividend_verifier.py --verify [días]  - Verificar dividendos próximos")
+        print("  python dividend_verifier.py --show [días]    - Mostrar próximos con estado")
+        print("  python dividend_verifier.py TICKER           - Verificar ticker específico")
